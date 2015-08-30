@@ -1,0 +1,43 @@
+	
+    	<div class="defBar_left"></div>
+        <div class="defBar_middle" style="width:926px;">
+            <span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu($this->request) ?></span>
+            <span class="right">
+                <?php echo $this->navigation()->mvcMenu()->renderMVCMenuAlwaysVisible(null, 'stats', null, null, array('class' => 'btn5')) ?>
+            </span>
+        </div>
+        <div class="defBar_right"></div>
+        
+        <div class="main_div" style="width:864px; padding-left:100px;">
+        	<div class="s_logo"></div>
+            <table align="center" cellpadding="0" cellspacing="1" width="820" class="mainTable">
+                <tr class="t_tr" style="font-size:14px;">
+                    <td>时间</td>
+                    <td>充值点数(<a style="color: #2f9900" href="<?php echo $this->baseUrl('/help#c7') ?>" target="_blank">网银充值点数比例</a>)</td>
+                    <td>消耗点数</td>
+                    <td><a href="<?php echo $this->baseUrl('/help#d7') ?>" target="_blank" title="活跃付费账户">APA</a></td>
+                    <td><a href="<?php echo $this->baseUrl('/help#d8') ?>" target="_blank" title="每用户平均收入">ARPU</a></td>
+                    <!--
+                    <td><a href="<?php echo $this->baseUrl('/help#b5') ?>" target="_blank" title="最高同时在线人数">PCU</a></td>
+                    <td><a href="<?php echo $this->baseUrl('/help#b4') ?>" target="_blank" title="平均同时在线人数">ACU</a></td>
+                    -->
+                    <td>活跃账号</td>
+                </tr>
+                <tr class="d_tr_3 weight">
+                    <td>今日</td>
+                    <td><?php echo @$this->todayPayment['chart']['data'] ?> <span style="color: #2f9900" title="网银充值点数比例">(<?php echo @round($this->todayPaymentBank['chart']['data'] / $this->todayPayment['chart']['data'] * 100, 2) ?>%)</span></td>
+                    <td><?php echo @$this->todayConsume['chart']['data'] ?></td>
+                    <td><?php echo @$this->todayConsume['chart']['apa'] ?></td>
+                    <td><?php echo @$this->money($this->todayConsume['chart']['data'] / $this->todayConsume['chart']['apa']) ?></td>
+                    <td><?php echo @$this->todayAccount['chart']['account'] ?></td>
+                </tr>
+                <tr class="d_tr_4">
+                    <td>昨日</td>
+                    <td><?php echo @$this->yestodayPayment['chart']['data'] ?> <span style="color: #2f9900" title="网银充值点数比例">(<?php echo @round($this->yestodayPaymentBank['chart']['data'] / $this->yestodayPayment['chart']['data'] * 100, 2) ?>%)</span></td>
+                    <td><?php echo @$this->yestodayConsume['chart']['data'] ?></td>
+                    <td><?php echo @$this->yestodayConsume['chart']['apa'] ?></td>
+                    <td><?php echo @$this->money($this->yestodayConsume['chart']['data'] / $this->yestodayConsume['chart']['apa'])?></td>
+                    <td><?php echo @$this->yestodayAccount['chart']['account'] ?></td>
+                </tr>
+            </table>
+        </div>

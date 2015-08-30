@@ -1,0 +1,19 @@
+<?php
+$this->headScript()->captureStart(); 
+?>
+$(function() {
+	$(':radio[name="select_datetime"]').click(function() {
+		$('.dateInput').attr('disabled', $(this).val() != 0);
+		if ($(this).val() != 0) {
+			$(this).closest('form').submit();
+		}
+	});
+	
+});
+<?php
+$this->headScript()->captureEnd();
+?>
+<form>
+	<?php echo !$this->dates ? $this->radioDate('select_datetime', 'start', 'end') 
+							 : $this->radioDate('select_datetime', 'start', 'end', $this->dates) ?>
+</form>

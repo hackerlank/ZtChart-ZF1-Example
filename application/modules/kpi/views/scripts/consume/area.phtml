@@ -1,0 +1,63 @@
+
+        	<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+                <span class="right">
+                    <?php echo $this->inflectorUrl($this->navigation()->mvcMenu()->renderMVCMenuAlwaysVisible('consume', 'monitor', null, null, array('class' => 'btn3')), 'monitor') ?>
+                </span>
+            </div>
+            <div class="defBar_right"></div>
+            
+            <div class="main_div">
+                <div class="kpi_chos_time_div">
+                	<div class="top_bar">
+                    	<span class="title">（<?php echo $this->deadline($this->start), '～', $this->deadline($this->end) ?>）</span>
+                        <span class="right">
+                            <span class="btn8">下载报表</span>
+                        </span>
+                    </div>
+                    <div class="txt_main_div">
+                    	<div class="d1">请选择你要查看的时间段：</div>
+                        <div>
+                        	<?php echo $this->partial('formdate.phtml', 
+                        				array('dates' => array(
+                        						ZtChart_Model_Assemble_Datetime::TODAY, 
+                        						ZtChart_Model_Assemble_Datetime::YESTODAY, 
+                        						ZtChart_Model_Assemble_Datetime::RECENT_1WEEK, 
+                        						ZtChart_Model_Assemble_Datetime::RECENT_1MONTH, 
+                        						ZtChart_Model_Assemble_Datetime::CUSTOM
+                        					)
+                        				)); 
+                        	?>
+                        </div>
+                    </div>
+                </div>
+          		<?php if (!empty($this->chart) && !empty($this->chartBank)) {?>
+                <div class="iframe_div">
+                	<iframe scrolling="no" frameborder="0" src="<?php echo $this->url(array('action' => 'area', 'controller' => 'consume', 'chart' => 'pie')) ?>"></iframe>
+                </div>
+                <br />
+            	<table align="center" cellpadding="0" cellspacing="1" width="740" class="mainTable">
+                	<tr class="t_tr">
+                        <td>地区</td>
+                        <td><a href="<?php echo $this->baseUrl('/help#d1') ?>" target="_blank">消耗点数</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#d2') ?>" target="_blank">网银消耗点数</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#d9') ?>" target="_blank">地区消耗占比</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#d10') ?>" target="_blank">地区网银消耗占比</a></td>
+                    </tr>
+                    <?php
+                    foreach ($this->chart as $label => $data) {
+                    ?>
+                    <tr class="<?php echo $this->cycle(array('d_tr_1', 'd_tr_2'))->next() ?>">
+                        <td><?php echo ZtChart_Model_Assemble_Area::getAreaChineseName($label) ?></td>
+                        <td><?php echo $data ?></td>
+                        <td><?php echo $this->chartBank[$label] ?></td>
+                        <td><?php echo @round($data / array_sum($this->chart) * 100, 2) ?>%</td>
+                        <td><?php echo @round($this->chartBank[$label] / array_sum($this->chartBank) * 100, 2) ?>%</td>
+                    </tr>
+                    <?php
+                    } 
+                    ?>  
+                </table>
+                <?php } ?>
+            </div>

@@ -1,0 +1,122 @@
+@charset "utf-8";
+body {
+}
+
+/*********************************************************************************************************************/
+.ui-dialog-contain {
+    margin: 5px auto 15px auto;
+}
+
+.ui-dialog .ui-header {
+    margin-top: 0;
+}
+
+.ui-msg {
+    z-index: 9999999;
+    position: fixed;
+    top: 50%;
+    width: 100%;
+    height: 100px;
+    border: 0;
+    display: none;
+}
+
+.ui-msg>div {
+    margin: 0 auto;
+    padding: 5px;
+    width: 200px;
+    text-align: center;
+}
+
+.ui-msg .ui-icon-loading {
+    display: block;
+    margin: 0 auto;
+    width: 46px;
+    height: 46px;
+    background: url(lib/jqm/images/ajax-loader.gif) no-repeat;
+}
+
+.ui-btn-inner {
+    padding: .4em 10px;
+}
+
+.ui-content {
+    overflow: hidden;
+}
+
+.ui-select {
+    margin: 4px;
+}
+
+/*********************************************************************************************************************/
+#info-bar {
+    position: fixed;
+    left: 0;
+    top: 5px;
+    height: 60px;
+    z-index: 3;
+}
+
+#info-bar>p {
+    margin: 1px;
+    padding: 1px;
+}
+
+#notice {
+    display: none;
+}
+
+.ui-guid {
+    display: none;
+    float: left;
+    width: 100%;
+}
+
+.ui-guid p {
+    text-align: center;
+}
+
+.step_show_div {
+    width: 171px;
+    height: 103px;
+    background-image: url(res/touch-icon-iphone4.png), url(res/show_bg.png);
+    background-repeat: no-repeat;
+    background-position: 10px 40px, left top;
+    z-index: 9999;
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    margin-left: -120px;
+    font-size: 12px;
+    padding: 40px 0 0 70px;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    cursor: pointer;
+}
+
+.step_show_div span {
+    font-weight: bold;
+}
+
+#today-info {
+    margin: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

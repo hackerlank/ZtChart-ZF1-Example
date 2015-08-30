@@ -1,0 +1,28 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl('/scripts/RGraph/RGraph.line.js'));
+$this->headScript()->appendFile($this->baseUrl('/scripts/RGraph/RGraph.bar.js'));
+$this->headScript()->captureStart();
+?>
+$(function() {
+	var payment = new RGraph.Bar('chart', $.map(<?php echo Zend_Json::encode(isset($this->chart['data']) ? array_slice($this->chart['data'], -30) : array()) ?>, function(v) { return (v + 0) / 10000 }));
+		payment.Set('chart.background.grid.autofit', true);
+		payment.Set('chart.gutter.left', 50);
+		payment.Set('chart.gutter.right', 40);
+		payment.Set('chart.gutter.bottom', 80);
+		payment.Set('chart.colors', ['#4E81BA', '#FF0000']);
+		payment.Set('chart.key', ['消耗点数（单位：万）']);
+		payment.Set('chart.key.background', 'white');
+		payment.Set('chart.key.position', 'gutter');
+		payment.Set('chart.key.position.x', 150);
+		payment.Set('chart.key.position.gutter.boxed', false);
+		payment.Set('chart.labels', $.map(<?php echo Zend_Json::encode(isset($this->chart['label']) ? array_slice($this->chart['label'], -30) : array()) ?>, function(v) { return v.substr(5) }));
+		payment.Set('chart.text.font', 'tahoma, arial, 宋体');
+
+    payment.Draw();
+});
+<?php 
+$this->headScript()->captureEnd();
+?>
+		<canvas id="chart" width="740" height="300" style="background-color: white;">
+        	[IE7+ is required to view the charts.]
+        </canvas>

@@ -1,0 +1,128 @@
+<?php
+$this->headLink()->appendStylesheet($this->baseUrl('/styles/nivo.css'));
+$this->headScript()->appendFile($this->baseUrl('/scripts/nivo.js'));
+$this->headScript()->captureStart();
+?>
+$(function(){
+	$('#slider').nivoSlider({
+		effect: 'sliceUpLeft',
+		slices: 15,
+		boxCols: 8,
+		boxRows: 4,
+		manualAdvance: false,
+		controlNav: true				
+	});
+});
+<?php
+$this->headScript()->captureEnd();
+?>
+	<div class="index_main">
+		<div id="MAIN">
+            <div class="left">
+                <div class="ad_div">
+                	<div class="theme-default">
+                        <div id="slider" class="nivoSlider">
+                            <a><img src="images/p1.jpg" alt="" /></a>
+                            <a><img src="images/p2.jpg" alt="" /></a>
+               
+                        </div>
+                    </div>
+                
+                </div>
+                <div class="index_menu_div">
+                	<div class="dd d1">
+                    	<p class="p1">实时监控</p>
+                        <p class="p2">您可以随时随地实时查看游戏的登陆、计费相关数据。</p>
+                    </div>
+                    <div class="dd d2">
+                    	<p class="p1">数据报表</p>
+                        <p class="p2">您可以多维度查看、分析历史数据。</p>
+                    </div>
+                    <div class="dd d3">
+                    	<p class="p1">充值消耗</p>
+                        <p class="p2">用户充值、游戏消耗趋势一目了然。</p>
+                    </div>
+                    <div class="dd d4">
+                    	<p class="p1">网银比例</p>
+                        <p class="p2">提高网银比例，帮公司节约渠道成本。</p>
+                    </div>
+                    <div class="dd d5">
+                    	<p class="p1">ACU/PCU</p>
+                        <p class="p2">及时关注在线人数波动，确保游戏运行正常。</p>
+                    </div>
+                    <div class="dd d6">
+                    	<p class="p1">APA/ARPU</p>
+                        <p class="p2">时刻关注项目收益！</p>
+                    </div>
+                </div>
+                
+                <!--帮助start-->
+                
+                <div class="bar_bg_3">
+                	<span class="title">帮助</span>
+                    <a class="right" href="<?php echo $this->url(array('module' => 'help')) ?>" target="_blank">更多&gt;&gt;</a>
+                </div>
+                
+                <div class="index_help_div">
+                	<span><a target="_blank" href="<?php echo $this->baseUrl('/help#c7') ?>">什么是网银充值比例？</a></span>
+                    <span><a target="_blank" href="<?php echo $this->baseUrl('/help#d6') ?>">什么是网银消耗比例？</a></span>
+                    <span><a target="_blank" href="<?php echo $this->baseUrl('/help#e1') ?>">数据准确度怎么样？</a></span>
+                    <span><a target="_blank" href="<?php echo $this->baseUrl('/help#e2') ?>">数据延迟多久？</a></span>
+                </div>
+                
+                <!--帮助end-->
+            </div>
+            
+            <div class="right">
+            	<div class="login_bg">
+            		<?php if (!$this->auth()) {?>
+            		<form method="post" action="?login">
+                	<ul>
+                    	<li>
+                        	<span class="spanTxt">域账号</span>
+                            <span class="spanInput"><input type="text" name="account" /></span>
+                        </li>
+                        <li>
+                        	<span class="spanTxt">域密码</span>
+                            <span class="spanInput"><input type="password" name="pwd" /></span>
+                        </li>
+                        <li class="l1">
+                        	<button type="submit" class="btn4" style="padding: 0; height: 36px;">登录</button>
+                            <span class="ren_ico"></span>
+                            <a href="<?php echo $this->url(array('controller' => 'contact', 'module' => 'help')) ?>">联系管理员</a>
+                        </li>
+                    </ul>
+                    </form>
+                    <?php } else {?>
+					<ul>
+                        <li style="height:100px;">
+							<div class="login_suc_info">
+								<img alt="" src="images/ren_ico.jpg" align="absmiddle" class="left"/>
+								<span class="right">HI, <?php echo $this->auth() ?><br /><br />欢迎来到平台实时监控系统！</span>
+							</div>
+                        </li>
+                        <li class="l1">
+                        	<span class="btn4" onclick="location.href='<?php echo $this->url(array('controller' => 'logout')) ?>'">退出</span>
+                            <span class="ren_ico"></span>
+                            <a href="<?php echo $this->url(array('controller' => 'contact', 'module' => 'help')) ?>">联系管理员</a>
+                        </li>
+                    </ul>
+					<?php } ?>
+                </div>
+                
+                <!--公告start-->
+                <div class="bar_bg_3" style="width:250px;">
+                	<span class="title">公告</span>
+                    <a class="right" href="<?php echo $this->url(array('controller' => 'notice', 'module' => 'help'), null, true) ?>" target="_blank">更多&gt;&gt;</a>
+                </div>
+                <div class="index_notice_div">
+                	<?php echo $this->action('embed', 'notice', 'help') ?>
+                </div>
+                <!--公告end-->
+                
+                <div class="version_img"></div>
+                <div class="ad1"></div>
+                
+            </div>
+        </div>
+    </div>

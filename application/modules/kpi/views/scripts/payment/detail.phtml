@@ -1,0 +1,61 @@
+
+        	<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+                <span class="right">
+                    <?php echo $this->inflectorUrl($this->navigation()->mvcMenu()->renderMVCMenuAlwaysVisible('payment', 'monitor', null, null, array('class' => 'btn3')), 'monitor') ?>
+                </span>
+            </div>
+            <div class="defBar_right"></div>
+            
+            <div class="main_div">
+                <div class="kpi_chos_time_div">
+                	<div class="top_bar">
+                    	<span class="title">（<?php echo $this->deadline($this->start), '～', $this->deadline($this->end) ?>）</span>
+                        <span class="right">
+                            <span class="btn8">下载报表</span>
+                        </span>
+                    </div>
+                    <div class="txt_main_div">
+                    	<div class="d1">请选择你要查看的时间段：</div>
+                        <div>
+                        	<?php echo $this->partial('formdate.phtml', 
+                        					array('dates' => array(
+                        						ZtChart_Model_Assemble_Datetime::THIS_MONTH, 
+                        						ZtChart_Model_Assemble_Datetime::LAST_1MONTH, 
+                        						ZtChart_Model_Assemble_Datetime::RECENT_1MONTH, 
+                        						ZtChart_Model_Assemble_Datetime::CUSTOM
+                        					)
+                        				)); 
+                        	?>
+                        </div>
+                    </div>
+                </div>
+          		<?php if (!empty($this->chart)) {?>
+                <div class="iframe_div">
+                	<iframe scrolling="no" frameborder="0" src="<?php echo $this->url(array('action' => 'detail', 'controller' => 'payment', 'chart' => 'bar')) ?>"></iframe>
+                </div>
+                <br />
+            	<table align="center" cellpadding="0" cellspacing="1" width="740" class="mainTable">
+                	<tr class="t_tr">
+                        <td>时间</td>
+                        <td><a href="<?php echo $this->baseUrl('/help#c3') ?>" target="_blank">充值金额（单位：元）</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#c6') ?>" target="_blank">网银充值金额（单位：元）</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#c7') ?>" target="_blank">网银充值比例</a></td>
+                    </tr>
+                    <?php
+                    do {
+                    	$chart = current($this->chart); $chartBank = current($this->chartBank);
+                    ?>
+                    <tr class="<?php echo $this->cycle(array('d_tr_1', 'd_tr_2'))->next() ?>">
+                        <td><?php echo key($this->chart) ?></td>
+                        <td><?php echo $this->money($chart['data']) ?></td>
+                        <td><?php echo $this->money($chartBank['data']) ?></td>
+                        <td><?php echo @round($chartBank['data'] / $chart['data'] * 100, 2) ?>%</td>
+                    </tr>
+                    <?php
+                    } while (false !== next($this->chart) && false !== next($this->chartBank));
+                    ?>  
+                </table>
+                <?php } ?>
+            </div>

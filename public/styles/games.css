@@ -1,0 +1,79 @@
+.game_icon {
+	vertical-align: middle; 
+	display: inline; 
+	width: 80px; 
+	padding-left: 25px;
+	font-size: 15px;
+	font-family: 微软雅黑;
+	background-position: center left;
+	background-repeat: no-repeat;
+}
+.game_icon#zt {
+	background-image: url(http://localhost/20110629/4e0ab9270b217.gif);
+}
+.game_icon#pt {
+	background-image: url();
+}
+.game_icon#jr {
+	background-image: url(http://localhost/20110701/4e0da51d53106.gif);
+}
+.game_icon#ztsj {
+	background-image: url();
+}
+.game_icon#zthj {
+	background-image: url(http://localhost/20110920/4e7814d46abb9.gif);
+}
+.game_icon#jr2 {
+	background-image: url();
+}
+.game_icon#kok3 {
+	background-image: url(http://localhost/20110630/4e0c3b84b662f.gif);
+}
+.game_icon#im {
+	background-image: url(http://localhost/20110701/4e0da5c0a3ae9.gif);
+}
+.game_icon#gd {
+	background-image: url(http://localhost/20110701/4e0da57d9dc66.gif);
+}
+.game_icon#xsg {
+	background-image: url();
+}
+.game_icon#lh {
+	background-image: url();
+}
+.game_icon#zt2 {
+	background-image: url(http://localhost/20110701/4e0da46ca360a.gif);
+}
+.game_icon#luanshi {
+	background-image: url();
+}
+.game_icon#xt{
+	background-image: url(http://localhost/20110701/4e0da564169e9.gif);
+}
+.game_icon#ls {
+	background-image: url(http://localhost/20110629/4e0b0bba365ee.gif);
+}
+.game_icon#els {
+	background-image: url(http://localhost/20110701/4e0da4859de64.gif);
+}
+.game_icon#ddt {
+	background-image: url();
+}
+.game_icon#allods {
+	background-image: url(http://localhost/20110630/4e0c1bb2631b3.gif);
+}
+.game_icon#sg {
+	background-image: url(http://localhost/20110701/4e0da4d708bfa.gif);
+}
+.game_icon#hsw {
+	background-image: url();
+}
+.game_icon#xx {
+	background-image: url();
+}
+.game_icon#ws {
+	background-image: url();
+}
+.game_icon#158wan {
+	background-image: url();
+}

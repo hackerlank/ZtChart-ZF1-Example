@@ -1,0 +1,16 @@
+<?php $this->headTitle('资源管理'); ?>
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+            </div>
+            <div class="defBar_right"></div>
+            <div class="main_div">
+            	<p align="center">
+            		覆盖资源可能会导致权限关系发生错误，是否继续？
+            	</p>
+            	<div align="center">
+            		<form method="post">
+            			<button type="submit" class="btn2">是</button><button class="btn2">否</button>
+            		</form>
+            	</div>
+            </div>

@@ -1,0 +1,18 @@
+<?php $this->headTitle('用户管理'); ?>
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+            </div>
+            <div class="defBar_right"></div>
+            <div class="main_div">
+            	<?php if (isset($this->user)) {?>
+            	<p align="center">
+            		是否要删除用户——<?php echo $this->user['user_chinesename']?>？
+            	</p>
+            	<div align="center">
+            		<form method="post">
+            			<button type="submit">是</button><button>否</button>
+            		</form>
+            	</div>
+            	<?php }?>
+            </div>

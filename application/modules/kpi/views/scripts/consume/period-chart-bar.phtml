@@ -1,0 +1,71 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl('/scripts/RGraph/RGraph.bar.js'));
+$this->headScript()->captureStart();
+?>
+$(function() {
+	var getChartData = function() {
+		var chart = new RGraph.Bar('chart', 
+    					$.map(<?php echo Zend_Json::encode(isset($this->chart['data']) ? $this->chart['data'] : array()) ?>, function(v) { return v + 0 }));
+    		chart.Set('chart.background.grid.autofit', true);
+    		chart.Set('chart.gutter.left', 70);
+    		chart.Set('chart.gutter.right', 20);
+    		chart.Set('chart.colors.sequential', true);
+    		chart.Set('chart.colors', ['#afd8f8','#f6bd0f','#8bba00','#ff8e46','#008e8e','#d64646','#8e468e','#588526','#fff468','#008ed6','#9d080d','#a186be','#cc6600','#fdc689','#aba000','#f26d7d','#fff200','#0054a6','#f7941c','#cc3300','#006600','#663300','#afd8f8','#f6bd0f']);
+    		chart.Set('chart.tooltips', $.map(<?php echo Zend_Json::encode(isset($this->chart['data']) ? $this->chart['data'] : array()) ?>, function(v) { return v + '' }));
+    		chart.Set('chart.tooltips.event', 'onmousemove');
+    		chart.Set('chart.labels', <?php echo $this->labelFormat(isset($this->chart['label']) ? $this->chart['label'] : array()) ?>);
+    		chart.Set('chart.text.color', '#333');
+			chart.Set('chart.text.font', 'tahoma, arial, 宋体');
+			chart.Set('chart.shadow', true);
+			chart.Set('chart.shadow.offsety', -3);
+			
+		return chart;
+	};
+		
+	var getChartBank = function() {
+		var chart = new RGraph.Bar('chart', 
+    					$.map(<?php echo Zend_Json::encode(isset($this->chartBank['data']) ? $this->chartBank['data'] : array()) ?>, function(v) { return v + 0 }));
+    		chart.Set('chart.background.grid.autofit', true);
+    		chart.Set('chart.gutter.left', 60);
+    		chart.Set('chart.gutter.right', 20);
+    		chart.Set('chart.colors.sequential', true);
+    		chart.Set('chart.colors', ['#afd8f8','#f6bd0f','#8bba00','#ff8e46','#008e8e','#d64646','#8e468e','#588526','#fff468','#008ed6','#9d080d','#a186be','#cc6600','#fdc689','#aba000','#f26d7d','#fff200','#0054a6','#f7941c','#cc3300','#006600','#663300','#afd8f8','#f6bd0f']);
+    		chart.Set('chart.tooltips', $.map(<?php echo Zend_Json::encode(isset($this->chartBank['data']) ? $this->chartBank['data'] : array()) ?>, function(v) { return v + '' }));
+    		chart.Set('chart.tooltips.event', 'onmousemove');
+    		chart.Set('chart.labels', <?php echo $this->labelFormat(isset($this->chartBank['label']) ? $this->chartBank['label'] : array()) ?>);
+    		chart.Set('chart.text.color', '#333');
+			chart.Set('chart.text.font', 'tahoma, arial, 宋体');
+			chart.Set('chart.shadow', true);
+			chart.Set('chart.shadow.offsety', -3);
+		
+		return chart;
+	};
+	
+	$(':radio[name="charts"]').change(function() {
+		RGraph.Clear(document.getElementById('chart'));
+		RGraph.ObjectRegistry.Clear();
+		eval('get' + $(this).val() + '()').Draw();
+	});	
+	$(':checked').change();
+});
+<?php 
+$this->headScript()->captureEnd() 
+?>		
+<style>
+<!--
+
+.ver-middle{
+	vertical-align:middle;
+}
+
+-->
+
+
+</style>
+		<canvas id="chart" width="740" height="250" style="background-color: white;">
+        	[IE7+ is required to view the charts.]
+        </canvas>
+        <div style="font-size: 12px; text-align: center;">
+        	<label><input type="radio" name="charts" value="ChartData" checked="checked" class="ver-middle"/> <span class="ver-middle">消耗点数</span></label>
+        	<label><input type="radio" name="charts" value="ChartBank" class="ver-middle"/> <span class="ver-middle">网银消耗点数</span> </label>
+        </div>

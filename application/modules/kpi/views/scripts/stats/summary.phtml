@@ -1,0 +1,37 @@
+<?php
+$this->headScript()->appendFile($this->baseUrl('/scripts/jquery.cookies.2.2.0.js'));
+$this->headScript()->captureStart();
+?>
+$(function() {
+	$('.config_box').click(function() {
+		$('.kpi_login_state_div').eq($('.config_box').index($(this))).slideDown('normal');
+	});
+	$('.config').click(function() {
+		var r = $(this).parent().find(':radio:checked');
+		$.cookies.set(r.attr('name'), r.val(), {'expiresAt': new Date('2099,12,31')});
+		$(this).parent().slideUp('normal');
+		
+		var iframe = $(this).closest('.main_div').find('iframe');
+		iframe.attr('src', iframe.attr('src'));
+	});
+	$('.cancel').click(function() {
+		$(this).parent().slideUp('normal');
+	});
+});
+<?php 
+$this->headScript()->captureEnd();
+?>
+			<!--登陆概况-->
+			<?php echo $this->action('access', 'stats', 'kpi', array(null), true) ?>
+            
+            <!--在线概况-->
+            <?php echo $this->action('online', 'stats', 'kpi', array(null), true) ?>
+            
+            <!--充值概况-->
+            <?php echo $this->action('payment', 'stats', 'kpi', array(null), true) ?>
+            
+            <!--消耗概况-->
+            <?php echo $this->action('consume', 'stats', 'kpi', array(null), true) ?>
+            
+            <!--今日地区分布-->
+            <?php echo $this->action('area', 'stats', 'kpi', array(null), true) ?>

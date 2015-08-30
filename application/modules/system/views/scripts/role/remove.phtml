@@ -1,0 +1,18 @@
+<?php $this->headTitle('角色管理'); ?>
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+            </div>
+            <div class="defBar_right"></div>
+            <div class="main_div">
+            	<?php if (isset($this->role)) {?>
+            	<p align="center">
+            		是否要删除角色——<?php echo $this->role['role_name']?>？
+            	</p>
+            	<div align="center">
+            		<form method="post">
+            			<button type="submit" class="btn2">是</button><button type="button" class="btn2">否</button>
+            		</form>
+            	</div>
+            	<?php }?>
+            </div>

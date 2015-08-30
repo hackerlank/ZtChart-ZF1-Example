@@ -1,0 +1,47 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl('/scripts/jquery.base64.js'));
+$this->headScript()->captureStart();
+?>
+(function($){
+	$.fn.serializeJSON = function() {
+		var json = {};
+		$.map($(this).serializeArray(), function(n, i){
+			json[n['name']] = n['value'];
+		});
+		
+		return json;
+	};
+	$.fn.serializeJSONString = function() {
+		var json = [];
+		$.map($(this).serializeArray(), function(n, i){
+			json.push('"' + n['name'] + '":"' + n['value'] + '"');
+		});
+		
+		return '{' + json.join(',') + '}';
+	};
+})(jQuery);
+
+$(function() {
+	$('form').submit(function() {
+		parent.window.location.href = '<?php echo $this->url(array('action' => 'search', 'controller' => 'user', 'module' => 'system', 'q' => ''), null, true) ?>' + $.base64.encode(encodeURI($(this).serializeJSONString()));
+	});
+});
+<?php
+$this->headScript()->captureEnd(); 
+?>
+		<form method="post">
+			<ul>
+	        	<li>
+	            	<span class="spanTxt">域账号：</span>
+	                <input type="text" class="textInput" name="user_name" />
+	            </li>
+	            <li>
+	            	<span class="spanTxt">姓名：</span>
+	                <input type="text" class="textInput" name="user_chinesename" />
+	            </li>
+	            <li class="liTxtCenter">
+	            	<button class="btn2" type="submit">确定</button>
+	                <button class="btn2" type="button">取消</button>
+	            </li>
+       		</ul>
+		</form>

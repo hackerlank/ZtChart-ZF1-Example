@@ -1,0 +1,36 @@
+<?php $this->headTitle('游戏KPI', 'PREPEND');?>
+	<div id="MAIN">
+		<script type="text/javascript">
+		$(function() {
+			$.each($('#gametype option:gt(0)').toArray()
+							.sort(function(a, b) { return $(a).text().localeCompare($(b).text()); }), 
+					function(i, n) {
+						$('#gametype').append(n);
+					}
+			);
+		});
+		</script>
+		<div class="gameList_chose">游戏列表：
+			<?php
+				$value = Zend_Controller_Front::getInstance()->getRequest()->getParam('gametype');
+				$options[$this->url(array('gametype' => null))] = '全部游戏';
+				foreach(Zend_Registry::get('user')->getRole()->getGameTypes() as $gameType => $gameName) {
+					$options[$this->url(array('gametype' => $gameType))] = $gameName;
+				}
+				echo $this->formSelect('gametype', $this->url(array('gametype' => $value)), 
+										array('onchange' => 'location.href = this.value'), $options, PHP_EOL);
+			?>
+		</div>
+    	<div class="left">
+        	<div class="kpi_left_menu_div">
+				<div class="system_menu_top"></div>
+				<div class="system_menu_bg">
+                <?php echo $this->navigation()->mvcMenu()->renderControllerMenu('kpi', 1, 'kpi_left_menu'); ?>
+				</div>
+				<div class="system_menu_bottom"></div>
+            </div>
+        </div>
+        <div class="right">
+            <?php echo $this->layout()->content ?>
+        </div>
+    </div> 

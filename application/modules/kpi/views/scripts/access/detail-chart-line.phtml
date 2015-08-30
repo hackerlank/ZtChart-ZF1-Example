@@ -1,0 +1,43 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl('/scripts/RGraph/RGraph.line.js'));
+$this->headScript()->captureStart();
+?>
+$(function() {
+	RGraph.Clear(document.getElementById('chart'));
+    var chart = new RGraph.Line('chart', 
+    					$.map(<?php echo Zend_Json::encode(isset($this->chart['data']) ? $this->chart['data'] : array()) ?>, function(v) { return v + 0 }), 
+    					$.map(<?php echo Zend_Json::encode(isset($this->chart['ip']) ? $this->chart['ip'] : array()) ?>, function(v) { return v + 0 }), 
+    					$.map(<?php echo Zend_Json::encode(isset($this->chartAccount['account']) ? $this->chartAccount['account'] : array()) ?>, function(v) { return v + 0 }));
+    	chart.Set('chart.background.grid.autofit', true);
+    	chart.Set('chart.gutter.left', 60);
+    	chart.Set('chart.gutter.top', 35);
+    	chart.Set('chart.gutter.right', 20);
+    	chart.Set('chart.gutter.bottom', 60);
+    	chart.Set('chart.colors', ['blue', 'green', 'red']);
+		chart.Set('chart.linewidth', 2);
+    	//chart.Set('chart.labels.above', true);
+    	chart.Set('chart.tickmarks', 'endcircle');
+    	chart.Set('chart.labels', <?php echo $this->labelFormat(isset($this->chart['label']) ? $this->chart['label'] : array()) ?>);
+    	chart.Set('chart.text.color', '#333');
+		chart.Set('chart.text.font', 'tahoma, arial, 宋体');
+		chart.Set('chart.key', ['登陆人次', '登陆IP', '活跃帐号']);
+		chart.Set('chart.key.colors', ['blue', 'green', 'red']);
+		chart.Set('chart.key.background', 'white');
+		chart.Set('chart.key.position', 'gutter');
+		chart.Set('chart.key.position.y', 230);
+		chart.Set('chart.key.position.gutter.boxed', false);
+		chart.Set('chart.shadow', true);
+		chart.Set('chart.shadow.offsetx', 0);
+		chart.Set('chart.shadow.offsety', 0);
+		chart.Set('chart.shadow.blur', 25);
+		chart.Set('chart.background.grid.autofit', true);
+		chart.Set('chart.background.grid.autofit.numvlines', 11);
+		
+    RGraph.Effects.Line.jQuery.Trace(chart);
+});
+<?php 
+$this->headScript()->captureEnd() 
+?>		
+		<canvas id="chart" width="740" height="250" style="background-color: white;">
+        	[IE7+ is required to view the charts.]
+        </canvas>

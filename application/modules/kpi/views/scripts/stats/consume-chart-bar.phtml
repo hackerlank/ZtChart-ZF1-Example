@@ -1,0 +1,59 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl('/scripts/RGraph/RGraph.line.js'));
+$this->headScript()->appendFile($this->baseUrl('/scripts/RGraph/RGraph.bar.js'));
+$this->headScript()->captureStart() 
+?>
+$(function() {
+	var bar = new RGraph.Bar('chart', $.map(<?php echo Zend_Json::encode(isset($this->chart['data']) ? $this->chart['data'] : array()) ?>, function(v) { return (v + 0) / 10000 }));
+		bar.Set('chart.background.grid.autofit', true);
+		bar.Set('chart.gutter.left', 50);
+		bar.Set('chart.gutter.right', 45);
+		bar.Set('chart.gutter.bottom', 80);
+		bar.Set('chart.colors', ['#4e81ba']);
+		bar.Set('chart.strokestyle', 'black');
+		bar.Set('chart.key', ['消耗点数（单位：万）']);
+		bar.Set('chart.key.background', 'white');
+		bar.Set('chart.key.position', 'gutter');
+		bar.Set('chart.key.position.x', 200);
+		bar.Set('chart.key.position.y', 270);
+		bar.Set('chart.key.colors', ['#4e81ba']);
+		bar.Set('chart.key.position.gutter.boxed', false);
+		bar.Set('chart.labels', <?php echo $this->labelFormat(isset($this->chart['label']) ? $this->chart['label'] : array()) ?>);
+		bar.Set('chart.text.font', 'Arial,Helvetica,sans-serif');
+		
+	var line = new RGraph.Line('chart', <?php echo Zend_Json::encode(array_map(function($netbank, $consume) { return @round($netbank / $consume * 100, 2); }, isset($this->chartBank['data']) ? $this->chartBank['data'] : array(), isset($this->chart['data']) ? $this->chart['data'] : array())) ?>);
+		line.Set('chart.background.grid', false);
+		line.Set('chart.linewidth', 2);
+		line.Set('chart.tickmarks', 'endcircle');
+		line.Set('chart.colors', ['#a3ae6a']);
+		line.Set('chart.key', ['网银消耗比例']);
+		line.Set('chart.key.background', 'white');
+        line.Set('chart.key.position', 'gutter');
+        line.Set('chart.key.colors', ['#a3ae6a']);
+		line.Set('chart.key.position.x', 400);
+		line.Set('chart.key.position.y', 270);
+		line.Set('chart.key.position.gutter.boxed', false);
+		line.Set('chart.gutter.left', 50);
+		line.Set('chart.gutter.right',45);
+		line.Set('chart.gutter.bottom', 80);
+		line.Set('chart.hmargin', 10);
+		line.Set('chart.text.font', 'Arial,Helvetica,sans-serif');
+	
+	var combo = new RGraph.CombinedChart(bar, line);
+    combo.Draw();
+    
+    	line.Set('chart.noaxes', true);
+    	line.Set('chart.noxaxis', true);
+    	line.Set('chart.yaxispos', 'right');
+		line.Set('chart.ymax', 100);
+		line.Set('chart.ylabels', true);
+		line.Set('chart.units.post', '%');
+		
+	RGraph.RedrawCanvas(line.canvas);
+});
+<?php 
+$this->headScript()->captureEnd() 
+?>
+		<canvas id="chart" width="740" height="300" style="background-color: white;">
+        	[IE7+ is required to view the charts.]
+        </canvas>

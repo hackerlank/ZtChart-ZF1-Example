@@ -1,0 +1,77 @@
+<?php
+$this->headScript()->appendFile($this->baseUrl('/scripts/jquery.cookies.2.2.0.js'));
+$this->headScript()->captureStart();
+?>
+$(function() {
+	$(':radio[name="stats_payment"][value="' + $.cookies.get('stats_payment') + '"]').prop('checked', true);
+});
+<?php 
+$this->headScript()->captureEnd();
+?>			
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title">充值概况</span>
+                <span class="right">
+                    <a class="btn3 config_box">默认设置</a>
+                    <?php echo $this->inflectorUrl($this->navigation()->mvcMenu()->renderMVCMenuAlwaysVisible('payment', 'monitor', null, null, array('class' => 'btn3')), 'monitor') ?>
+                    <?php echo $this->navigation()->mvcMenu()->renderMVCMenuAlwaysVisible(null, 'payment', null, null, array('class' => 'btn3', 'label' => '查看全部')) ?>
+                </span>
+            </div>
+            <div class="defBar_right"></div>
+            
+            <div class="main_div">
+            	<div class="kpi_login_state_div" >
+                	<span class="ss"><strong>默认显示时段设置：</strong></span>
+                    <span class="ss"><label><input type="radio" name="stats_payment" value="<?php echo ZtChart_Model_Assemble_Datetime::THIS_MONTH ?>" checked="checked" />&nbsp;本月</label></span>
+                    <span class="ss"><label><input type="radio" name="stats_payment" value="<?php echo ZtChart_Model_Assemble_Datetime::LAST_1MONTH ?>" />&nbsp;上月</label></span>
+                    <span class="ss"><label><input type="radio" name="stats_payment" value="<?php echo ZtChart_Model_Assemble_Datetime::RECENT_1MONTH ?>" />&nbsp;近31天</label></span>
+                    <br />
+                    <br />
+                    <span class="btn6 config">保存修改</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="btn6 cancel">取&nbsp;&nbsp;消</span>
+                </div>
+            	<table align="center" cellpadding="0" cellspacing="1" width="740" class="mainTable">
+                	<tr class="t_tr">
+                        <td>时间</td>
+                        <td><a href="<?php echo $this->baseUrl('/help#c3') ?>" target="_blank">充值金额（单位：元）</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#c6') ?>" target="_blank">网银充值金额（单位：元）</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#c6') ?>" target="_blank">非网银充值金额（单位：元）</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#c7') ?>" target="_blank">网银充值比例</a></td>
+                    </tr>
+                    <tr class="d_tr_1 weight">
+                        <td>今日</td>
+                        <td><?php echo $this->money($entire = array_reduce($this->chartToday, function($sum, $value) { return $sum + $value['data']; }, 0)) ?></td>
+                        <td><?php echo $this->money($netbank = array_reduce($this->chartTodayBank, function($sum, $value) { return $sum + $value['data']; }, 0)) ?></td>
+                        <td><?php echo $this->money($entire - $netbank) ?></td>
+                        <td><?php echo @round($netbank / $entire * 100, 2) ?>%</td>
+                    </tr>
+                    <tr class="d_tr_2">
+                    	<td>昨日</td>
+                        <td><?php echo $this->money($entire = $this->chartEntire[date('Y-m-d', time() - 86400)]['data']) ?></td>
+                        <td><?php echo $this->money($netbank = $this->chartEntireBank[date('Y-m-d', time() - 86400)]['data']) ?></td>
+                        <td><?php echo $this->money($entire - $netbank) ?></td>
+                        <td><?php echo @round($netbank / $entire * 100, 2) ?>%</td>
+                    </tr>
+                    <tr class="d_tr_1">
+                        <td>日平均</td>
+                        <td><?php echo $this->money($entire = (array_reduce($this->chartEntire, function($sum, $value) { return $sum + $value['data']; }, 0) / count($this->chartEntire))) ?></td>
+                        <td><?php echo $this->money($netbank = (array_reduce($this->chartEntireBank, function($sum, $value) { return $sum + $value['data']; }, 0) / count($this->chartEntireBank))) ?></td>
+                        <td><?php echo $this->money($entire - $netbank) ?></td>
+                        <td><?php echo @round($netbank / $entire * 100, 2) ?>%</td>
+
+                    </tr>
+                    <tr class="d_tr_2">
+                        <td>历史最高</td>
+                        <td><?php echo $this->money($entire = array_reduce($this->chartEntire, function($max, $value) { return max($max, $value['data']); }, 0)) ?></td>
+                        <td><?php echo $this->money($netbank = array_reduce($this->chartEntireBank, function($max, $value) { return max($max, $value['data']); }, 0)) ?></td>
+                        <td><?php echo $this->money($entire - $netbank) ?></td>
+                        <td><?php echo @round($netbank / $entire * 100, 2) ?>%</td>
+                    </tr>
+                </table>
+                <br />
+                <div class="iframe_div_1">
+                	<iframe allowtransparency="ture" scrolling="no" frameborder="0" src="<?php echo $this->url(array('action' => 'payment', 'controller' => 'stats', 'chart' => 'bar')) ?>"></iframe>
+                </div>
+            </div>
+            
+            <br />

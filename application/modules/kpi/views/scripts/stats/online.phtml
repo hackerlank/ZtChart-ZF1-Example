@@ -1,0 +1,68 @@
+<?php
+$this->headScript()->appendFile($this->baseUrl('/scripts/jquery.cookies.2.2.0.js'));
+$this->headScript()->captureStart();
+?>
+$(function() {
+	$(':radio[name="config_online"][value="' + $.cookies.get('config_online') + '"]').prop('checked', true);
+});
+<?php 
+$this->headScript()->captureEnd();
+?>			
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title">在线概况</span>
+                <span class="right">
+                    <a class="btn3 config_box">默认设置</a>
+                    <?php echo $this->inflectorUrl($this->navigation()->mvcMenu()->renderMVCMenuAlwaysVisible('access', 'monitor', null, null, array('class' => 'btn3')), 'monitor') ?>
+                    <?php echo $this->navigation()->mvcMenu()->renderMVCMenuAlwaysVisible(null, 'online', null, null, array('class' => 'btn3', 'label' => '查看全部')) ?>
+                </span>
+            </div>
+            <div class="defBar_right"></div>
+            
+            <div class="main_div">
+            	<div class="kpi_login_state_div" >
+                	<span class="ss"><strong>默认显示时段设置：</strong></span>
+                    <span class="ss"><label><input type="radio" name="config_online" value="<?php echo ZtChart_Model_Assemble_Datetime::RECENT_24HOUR ?>" />&nbsp;近24小时</label></span>
+                    <span class="ss"><label><input type="radio" name="config_online" value="<?php echo ZtChart_Model_Assemble_Datetime::RECENT_48HOUR ?>" />&nbsp;近48小时</label></span>
+                    <span class="ss"><label><input type="radio" name="config_online" value="<?php echo ZtChart_Model_Assemble_Datetime::RECENT_1WEEK ?>" />&nbsp;近7天</label></span>
+                    <span class="ss"><label><input type="radio" name="config_online" value="<?php echo ZtChart_Model_Assemble_Datetime::RECENT_1MONTH ?>" />&nbsp;近31天</label></span>
+                    <br />
+                    <br />
+                    <span class="btn6 config">保存修改</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="btn6 cancel">取&nbsp;&nbsp;消</span>
+                </div>
+            	<table align="center" cellpadding="0" cellspacing="1" width="740" class="mainTable">
+                	<tr class="t_tr">
+                        <td>时间</td>
+                        <td><a href="<?php echo $this->baseUrl('/help#b5') ?>" target="_blank" title="最高同时在线人数">PCU</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#b4') ?>" target="_blank" title="平均同时在线人数">ACU</a></td>
+                    </tr>
+                    <tr class="d_tr_1 weight">
+                        <td>今日</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="d_tr_2">
+                        <td>昨日</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="d_tr_1">
+                        <td>每日平均</td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+                    <tr class="d_tr_2">
+                        <td>历史最高</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <br />
+                <div class="iframe_div">
+                	<iframe allowtransparency="ture" scrolling="no" frameborder="0" src="<?php echo $this->url(array('action' => 'online', 'controller' => 'stats', 'chart' => 'line')) ?>"></iframe>
+                </div>
+            </div>
+
+            <br />

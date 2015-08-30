@@ -1,0 +1,53 @@
+<?php 
+$this->headTitle('用户管理');
+$this->headScript()->captureStart();
+?>
+$(document).ready(function(){
+	$('#user_name').blur(function(){
+		$.get(
+			'<?php echo $this->url(array('action' => 'ldap', 'controller' => 'user', 'module' => 'system'), null, true)?>', 
+			{'user_name': $('#user_name').val(), 'column': ['display_name', 'department']}, 
+			function(data) {
+				$('#user_chinesename').val(data.display_name);
+				$('#user_dept').val(data.department);
+			}, 
+			'json'
+		);
+	});
+});
+<?php
+$this->headScript()->captureEnd(); 
+?>	
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+            </div>
+            <div class="defBar_right"></div>
+            <div class="main_div">
+            	<form method="post">
+					<table align="center" cellpadding="0" cellspacing="0" style="background: none;">
+						<tr>
+							<td width="99" align="center"><strong>域帐号</strong></td>
+							<td align="left"><input type="text" name="user_name" id="user_name" /></td>
+						</tr>
+						<tr>
+							<td width="99" align="center"><strong>中文名</strong></td>
+							<td align="left"><input type="text" name="user_chinesename" id="user_chinesename" readonly="readonly" /></td>
+						</tr>
+						<tr>
+							<td width="99" align="center"><strong>部门</strong></td>
+							<td align="left"><input type="text" name="user_dept" id="user_dept" readonly="readonly" /></td>
+						</tr>
+						<tr>
+							<td width="99" align="center"><strong>启用</strong></td>
+							<td align="left"><input type="checkbox" name="user_active" value="1" checked="checked" /></td>
+						</tr>
+						<tr>
+							<td align="center" colspan="2">
+								<button type="submit" class="btn2">新增</button>
+								<button type="reset" class="btn2">重置</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+            </div>

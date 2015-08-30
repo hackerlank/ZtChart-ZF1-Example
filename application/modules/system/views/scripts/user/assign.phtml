@@ -1,0 +1,19 @@
+<?php $this->headTitle('用户管理') ?>
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+            </div>
+            <div class="defBar_right"></div>
+            <div class="main_div">
+            	<?php if (true !== $this->noRoleUser) {?>
+            	<form method="post">
+            		<?php echo $this->roleList($this->parentRoleId, array('name' => 'user_roleid', 'value' => $this->roleId), 'radio')?>
+            		<div align="center">
+            			<button type="submit" class="btn2">确定</button>
+            			<button type="reset" class="btn2">重置</button>
+            		</div>
+            	</form>
+            	<?php } else {?>
+            		<div align="center">没有权限</div>
+            	<?php }?>
+            </div>

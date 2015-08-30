@@ -1,0 +1,15 @@
+<?php $this->headTitle('系统管理', 'PREPEND') ?>
+	<div id="MAIN">
+    	<div class="left">
+        	<div class="left_menu_div">
+				<div class="system_menu_top"></div>
+				<div class="system_menu_bg">
+                <?php echo $this->navigation()->mvcMenu()->renderControllerMenu('system', 0, 'left_menu', null, true); ?>
+				</div>
+				<div class="system_menu_bottom"></div>
+            </div>
+        </div>
+        <div class="right">
+            <?php echo $this->layout()->content ?>
+        </div>
+    </div> 

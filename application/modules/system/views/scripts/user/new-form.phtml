@@ -1,0 +1,42 @@
+<?php
+$this->headScript()->captureStart(); 
+?>
+$(function(){
+	$('#user_name').blur(function(){
+		$.get(
+			'<?php echo $this->url(array('action' => 'ldap', 'controller' => 'user', 'module' => 'system'), null, true)?>', 
+			{'user_name': $('#user_name').val(), 'column': ['display_name', 'department']}, 
+			function(data) {
+				$('#user_chinesename').val(data.display_name);
+				$('#user_dept').val(data.department);
+			}, 
+			'json'
+		);
+	});
+});
+<?php
+$this->headScript()->captureEnd(); 
+?>	
+				<form method="post">
+					<ul>
+			        	<li>
+			            	<span class="spanTxt">域账号：</span>
+			                <input type="text" class="textInput" id="user_name" name="user_name" />
+			            </li>
+			            <li>
+			            	<span class="spanTxt">姓名：</span>
+			                <input type="text" class="textInput" id="user_chinesename" name="user_chinesename" />
+			            </li>
+			            <li>
+			            	<span class="spanTxt">部门：</span>
+			                <input type="text" class="textInput" id="user_dept" name="user_dept" />
+			            </li>
+			            <li>
+			            	<span class="spanTxt">启用：</span>
+			                <input type="checkbox" class="textInput" name="user_active" value="1" checked="checked" />
+			            </li>
+			            <li class="liTxtCenter">
+			            	<button type="submit" class="btn2">确定</button>
+			            </li>
+			        </ul>
+				</form>

@@ -1,0 +1,92 @@
+[production]
+phpSettings.date.timezone = Asia/Shanghai
+phpSettings.default_charset = utf-8
+phpSettings.display_startup_errors = 0
+phpSettings.display_errors = 0
+includePaths.library = APPLICATION_PATH "/../library"
+bootstrap.path = APPLICATION_BIN "/Bootstrap.php"
+bootstrap.class = "Bootstrap"
+appnamespace = "ZtChart"
+pluginPaths.resources = APPLICATION_PATH "/resources"
+
+;区域配置
+resources.locale.default = "zh_CN"
+
+;数据库配置
+resources.multidb.defaultMetadataCache = "database"
+
+;Infobright
+resources.multidb.infobright.adapterNamespace = "ZtChart_Model_Db_Adapter"
+resources.multidb.infobright.adapter = "pdo_infobright"
+resources.multidb.infobright.unix_socket = /tmp/mysql-ib.sock
+resources.multidb.infobright.username = 
+resources.multidb.infobright.password = 
+resources.multidb.infobright.dbname = 
+resources.multidb.infobright.charset = "utf8"
+resources.multidb.infobright.default = true
+
+;MySQL
+resources.multidb.mysql.adapterNamespace = "ZtChart_Model_Db_Adapter"
+resources.multidb.mysql.adapter = "pdo_mysql"
+resources.multidb.mysql.host = 
+resources.multidb.mysql.username = 
+resources.multidb.mysql.password = 
+resources.multidb.mysql.dbname = 
+resources.multidb.mysql.charset = "utf8"
+
+;缓存配置
+resources.cachemanager.database.frontend.name = Core
+resources.cachemanager.database.frontend.options.caching = true
+resources.cachemanager.database.frontend.options.cache_id_prefix = "ZtChart_Db_Console"
+resources.cachemanager.database.frontend.options.lifetime = null
+resources.cachemanager.database.frontend.options.automatic_serialization = true
+resources.cachemanager.database.backend.name = File
+
+resources.cachemanager.chart.frontend.name = Core
+resources.cachemanager.chart.frontend.options.caching = false
+resources.cachemanager.chart.frontend.options.cache_id_prefix = "ZtChart"
+resources.cachemanager.chart.frontend.options.lifetime = 
+resources.cachemanager.chart.frontend.options.write_control = true
+resources.cachemanager.chart.frontend.options.automatic_serialization = true
+resources.cachemanager.chart.backend.name = Memcached
+resources.cachemanager.chart.backend.options.servers.host = 
+resources.cachemanager.chart.backend.options.servers.port = 
+
+resources.cachemanager.ip.frontend.name = Core
+resources.cachemanager.ip.frontend.options.caching = false
+resources.cachemanager.ip.frontend.options.cache_id_prefix = "ZtChart_Ip"
+resources.cachemanager.ip.frontend.options.lifetime = 
+resources.cachemanager.ip.frontend.options.write_control = true
+resources.cachemanager.ip.frontend.options.automatic_serialization = true
+resources.cachemanager.ip.backend.name = Memcached
+resources.cachemanager.ip.backend.options.servers.host = 
+resources.cachemanager.ip.backend.options.servers.port = 
+
+resources.cachemanager.acl.frontend.name = Core
+resources.cachemanager.acl.frontend.options.caching = true
+resources.cachemanager.acl.frontend.options.cache_id_prefix = "ZtChart_Acl"
+resources.cachemanager.acl.frontend.options.lifetime = null
+resources.cachemanager.acl.frontend.options.automatic_serialization = true
+resources.cachemanager.acl.backend.name = File
+
+[staging : production]
+
+[testing : production]
+phpSettings.display_startup_errors = 1
+phpSettings.display_errors = 1
+
+resources.multidb.test.adapter = "pdo_mysql"
+resources.multidb.test.host = 
+resources.multidb.test.username = 
+resources.multidb.test.password = 
+resources.multidb.test.dbname = 
+resources.multidb.test.default = true
+
+[development : production]
+phpSettings.display_startup_errors = 1
+phpSettings.display_errors = 1
+
+;打开数据库语句分析器
+resources.db.params.profiler = true
+resources.multidb.mysql.profiler = true
+resources.multidb.infobright.profiler = true

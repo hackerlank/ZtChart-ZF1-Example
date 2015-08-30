@@ -1,0 +1,77 @@
+<?php
+$this->headScript()->appendFile($this->baseUrl('/scripts/jquery.cookies.2.2.0.js'));
+$this->headScript()->captureStart();
+?>
+$(function() {
+	$(':radio[name="stats_access"][value="' + $.cookies.get('stats_access') + '"]').prop('checked', true);
+});
+<?php 
+$this->headScript()->captureEnd();
+?>
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title">登陆概况</span>
+                <span class="right">
+                    <a class="btn3 config_box">默认设置</a>
+                    <?php echo $this->inflectorUrl($this->navigation()->mvcMenu()->renderMVCMenuAlwaysVisible('access', 'monitor', null, null, array('class' => 'btn3')), 'monitor') ?>
+                    <?php echo $this->navigation()->mvcMenu()->renderMVCMenuAlwaysVisible(null, 'access', null, null, array('class' => 'btn3', 'label' => '查看全部')) ?>
+                </span>
+            </div>
+            <div class="defBar_right"></div>
+            
+            <div class="main_div">
+            	<div class="kpi_login_state_div" >
+	            	<span class="ss"><strong>默认显示时段设置：</strong></span>
+                    <span class="ss"><label><input type="radio" name="stats_access" value="<?php echo ZtChart_Model_Assemble_Datetime::RECENT_24HOUR ?>" checked="checked" />&nbsp;近24小时</label></span>
+                    <span class="ss"><label><input type="radio" name="stats_access" value="<?php echo ZtChart_Model_Assemble_Datetime::RECENT_48HOUR ?>" />&nbsp;近48小时</label></span>
+                    <span class="ss"><label><input type="radio" name="stats_access" value="<?php echo ZtChart_Model_Assemble_Datetime::RECENT_1WEEK ?>" />&nbsp;近7天</label></span>
+                    <span class="ss"><label><input type="radio" name="stats_access" value="<?php echo ZtChart_Model_Assemble_Datetime::RECENT_1MONTH ?>" />&nbsp;近31天</label></span>
+                    <br />
+                    <br />
+                    <span class="btn6 config">保存修改</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="btn6 cancel">取&nbsp;&nbsp;消</span>
+                </div>
+                <br />
+            	<table align="center" cellpadding="0" cellspacing="1" width="740" class="mainTable">
+                	<tr class="t_tr">
+                        <td>时间</td>
+                        <td><a href="<?php echo $this->baseUrl('/help#a1') ?>" target="_blank">登陆人次</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#a2') ?>" target="_blank">登陆IP</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#a3') ?>" target="_blank">活跃账号</a></td>
+                        <td><a href="<?php echo $this->baseUrl('/help#a4') ?>" target="_blank">人均登陆次数</a></td>
+                    </tr>
+                    <tr class="d_tr_1 weight">
+                        <td>今日</td>
+                        <td><?php echo $data = array_reduce($this->chartIpToday, function($sum, $value) { return $sum + $value['data']; }, 0) ?></td>
+                        <td><?php echo $ip = array_reduce($this->chartIpToday, function($sum, $value) { return $sum + $value['ip']; }, 0) ?></td>
+                        <td><?php echo $account = array_reduce($this->chartAccountToday, function($sum, $value) { return $sum + $value['account']; }, 0) ?></td>
+                        <td><?php echo @round($data / $account, 2) ?></td>
+                    </tr>
+                    <tr class="d_tr_2">
+                        <td>昨日</td>
+                        <td><?php echo $data = $this->chartIpEntire[date('Y-m-d', time() - 86400)]['data'] ?></td>
+                        <td><?php echo $ip = $this->chartIpEntire[date('Y-m-d', time() - 86400)]['ip'] ?></td>
+                        <td><?php echo $account = $this->chartAccountEntire[date('Y-m-d', time() - 86400)]['account'] ?></td>
+                        <td><?php echo @round($data / $account, 2) ?></td>
+                    </tr>
+                    <tr class="d_tr_1">
+                        <td>日平均</td>
+                        <td><?php echo $data = round(array_reduce($this->chartIpEntire, function($sum, $value) { return $sum + $value['data']; }, 0) / count($this->chartIpEntire)) ?></td>
+                        <td><?php echo $ip = round(array_reduce($this->chartIpEntire, function($sum, $value) { return $sum + $value['ip']; }, 0) / count($this->chartIpEntire)) ?></td>
+                        <td><?php echo $account = round(array_reduce($this->chartAccountEntire, function($sum, $value) { return $sum + $value['account']; }, 0) / count($this->chartAccountEntire)) ?></td>
+                        <td><?php echo @round($data / $account, 2) ?></td>
+                    </tr>
+                    <tr class="d_tr_2">
+                        <td>历史最高</td>
+                        <td><?php echo $data = array_reduce($this->chartIpEntire, function($max, $value) { return max($max, $value['data']); }, 0) ?></td>
+                        <td><?php echo $ip = array_reduce($this->chartIpEntire, function($max, $value) { return max($max, $value['ip']); }, 0) ?></td>
+                        <td><?php echo $account = array_reduce($this->chartAccountEntire, function($max, $value) { return max($max, $value['account']); }, 0) ?></td>
+                        <td><?php echo @round($data / $account, 2) ?></td>
+                    </tr>
+                </table>
+                <br />
+                <div class="iframe_div">
+                	<iframe allowtransparency="ture" scrolling="no" frameborder="0" src="<?php echo $this->url(array('action' => 'access', 'controller' => 'stats', 'chart' => 'line')) ?>"></iframe>
+                </div>
+            </div>
+            <br />

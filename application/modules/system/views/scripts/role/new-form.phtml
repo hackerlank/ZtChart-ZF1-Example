@@ -1,0 +1,19 @@
+				<form method="post">
+					<ul>
+			        	<li>
+			            	<span class="spanTxt">角色名称：</span>
+			                <input type="text" name="role_name" id="role_name" />
+			            </li>
+			            <li>
+			            	<span class="spanTxt">角色描述：</span>
+			                <input type="text" name="role_desc" id="role_desc" />
+			            </li>
+			            <li>
+			            	<span class="spanTxt">游戏：</span>
+			                <?php echo $this->formMultiCheckbox('role_gametype[]', null, null, Zend_Registry::get('user')->getRole()->getGameTypes(), PHP_EOL) ?>
+			            </li>
+			            <li class="liTxtCenter">
+			            	<button type="submit" class="btn2">确定</button>
+			            </li>
+			        </ul>
+				</form>

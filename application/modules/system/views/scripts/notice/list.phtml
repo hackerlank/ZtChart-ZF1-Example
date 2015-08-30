@@ -1,0 +1,65 @@
+<?php 
+$this->headTitle('公告管理');
+$this->headScript()->captureStart(); 
+?>
+$(function(){
+	$('.dialog').click(function(e) {
+		e.preventDefault();
+		$('<iframe src="' + this.href + '"></iframe>').dialog(
+			{
+				'width': 500, 
+				'resizable': false, 
+				'title': $(this).text(), 
+				'open': function() {
+					this.style.width = '95%';
+				}
+			}
+		);
+	});
+});
+<?php
+$this->headScript()->captureEnd(); 
+?>
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+                <span class="right">
+                    <?php echo $this->navigation()->mvcMenu()->renderMVCMenu('new', null, null, null, array('class' => 'btn3 dialog')) ?>
+                </span>
+            </div>
+            <div class="defBar_right"></div>
+            
+            <div class="main_div">
+            	<table align="center" cellpadding="0" cellspacing="1" width="740" class="mainTable">
+                	<tr class="t_tr">
+                    	<td width="30">&nbsp;</td>
+                        <td>标题</td>
+                        <td>发布时间</td>
+                        <td width="240">管理</td>
+                    </tr>
+                    <?php foreach ($this->paginator->getCurrentItems() as $notice) { ?>
+                    <tr class="d_tr_1">
+                    	<td><input type="checkbox"/></td>
+                        <td><?php echo $notice['notice_title'] ?></td>
+                        <td><?php echo $notice['notice_datetime'] ?></td>
+                        <td>
+                        	<?php echo $this->navigation()->mvcMenu()->renderMVCMenu('edit', null, null, array('notice_id' => $notice['notice_id']), array('class' => 'btn2 dialog')) ?>
+                        	<?php echo $this->navigation()->mvcMenu()->renderMVCMenu('remove', null, null, array('notice_id' => $notice['notice_id']), array('class' => 'btn2 dialog')) ?>
+                        </td>
+                    </tr>
+                    <?php 
+					}
+					for ($i = 0; $i < (Zend_Paginator::getDefaultItemCountPerPage() - $this->paginator->getCurrentItemCount()); $i++) {
+                    ?>
+                    <tr class="<?php echo $this->cycle(array('d_tr_1', 'd_tr_2'))->next() ?>">
+                    	<td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <?php
+                    } 
+                    ?>
+                </table>
+                <div class="page_div"><?php echo $this->paginationControl() ?></div>
+            </div>

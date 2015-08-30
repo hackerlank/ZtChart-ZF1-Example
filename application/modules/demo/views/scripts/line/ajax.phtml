@@ -1,0 +1,38 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="<?php echo $this->baseUrl('/scripts/jquery-1.7.1.min.js')?>"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl('/scripts/RGraph/RGraph.common.core.js')?>"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl('/scripts/RGraph/RGraph.line.js')?>"></script>
+	<script type="text/javascript">
+		$(function() {
+			var current = parseInt(Date.parse('03/13/2012 10:38:00') / 1000);
+			$.ajaxSetup({timeout: 1000});
+			setInterval(function() {
+		    	//var current = parseInt((new Date().getTime()) / 1000);
+	    		$.post('', {'start': current - 60, 'end': current}, function(chartData) {
+	    			RGraph.Clear(document.getElementById('chart'));
+	    			chart = new RGraph.Line('chart', chartData.data);
+	    			chart.Set('chart.title', '登陆日志曲线图：' + new Date().toLocaleDateString());
+			    	chart.Set('chart.background.grid.autofit', true);
+			    	chart.Set('chart.gutter.left', 35);
+			    	chart.Set('chart.gutter.right', 5);
+			    	chart.Set('chart.hmargin', 10);
+			    	chart.Set('chart.labels.above', true);
+			    	chart.Set('chart.tickmarks', 'endcircle');
+			    	chart.Set('chart.labels', chartData.label);
+			    	chart.Set('chart.text.angle', 45);
+			    	chart.Set('chart.text.size', 8);
+			    	chart.Draw();
+		    	}, 'json');
+		    	current += 1;
+		    }, 1000);
+		});
+	</script>
+	<title>ZtChart Demo - Line</title>
+</head>
+<body>
+	<canvas id="chart" width="1200" height="500">The system must be run at least HTML5</canvas>
+</body>
+</html>

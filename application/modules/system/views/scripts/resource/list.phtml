@@ -1,0 +1,16 @@
+<?php 
+$this->headTitle('资源管理');
+$this->headLink()->appendStylesheet($this->baseUrl('/styles/acl.css'));
+?>
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+            	<span class="right">
+                    <?php echo $this->navigation()->mvcMenu()->renderMVCMenu('reset', null, null, null, array('class' => 'btn3')) ?>
+                    <?php echo $this->navigation()->mvcMenu()->renderMVCMenu('replace', null, null, null, array('class' => 'btn3')) ?>
+                </span>
+            </div>
+            <div class="defBar_right"></div>
+            <div class="main_div">
+            	<?php echo $this->resourceList()->renderList(null, null, array('ulClass' => 'resource', 'liClass' => 'item')) ?>
+            </div>

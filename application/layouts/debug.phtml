@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<?php echo $this->headMeta() ?>
+		
+	<?php $this->headTitle('平台实时监控数据系统', 'PREPEND')->setSeparator('-') ?>
+    <?php echo $this->headTitle() ?>
+    
+    <?php 
+    	$this->headLink()->prependStylesheet($this->baseUrl('/styles/header.css'));
+    	$this->headLink()->prependStylesheet($this->baseUrl('/styles/index.css'));
+    	$this->headLink()->prependStylesheet($this->baseUrl('/styles/footer.css'));
+    ?>
+		
+    <?php echo $this->headLink() ?>
+    <?php echo $this->headStyle() ?>
+    
+    <?php echo $this->jQuery() ?>
+    <?php echo $this->headScript() ?>
+    <script type="text/javascript">
+    $(function(){
+    	$("table.mainTable").find("tr:not('.t_tr')").hover(function(){
+    			$(this).find("td:not('.last, .first')").attr("style","background:none;background-color:#ebebeb;");
+    		},function(){
+    			$(this).find("td:not('.last, .first')").removeAttr("style");
+    	});
+    });
+    </script>
+
+</head>
+<body>
+	<div class="header_iframe">
+    	<div class="head_main_div">
+            <div class="logo"></div>
+            <div class="head_link_bg">
+                <a target="_blank" href="#">产品服务</a>
+                <a target="_blank" href="#">充值中心</a>
+                <a target="_blank" href="#">账号中心</a>
+                <a target="_blank" href="#">积分购物</a>
+            </div>
+            <div class="head_menu_bg">
+                <?php echo $this->navigation()->mvcMenu()->setMaxDepth(0) ?>
+            </div>
+			
+			<div class="login_info_div"><?php if ($this->auth()) echo '欢迎光临，' . $this->auth() . '，<a href="' . $this->baseUrl('/logout') . ' ">退出</a>' ?></div>
+        </div>
+    </div>
+    <?php echo $this->layout()->content ?>
+	<div class="footer_iframe">
+		<div class="footer_content">
+			<div class="footer_main_div">
+				
+				<div class="link_div">
+					<span class="left">
+						<a href="<?php echo $this->url(array('controller' => 'about', 'module' => 'help'), null, true)?>">关于我们</a>|&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="<?php echo $this->url(array('controller' => 'contact', 'module' => 'help'), null, true)?>">联系我们</a>
+				
+						<span class="html5_info_div">建议使用支持<a target="_blank" href="http://www.html5china.com/help/browser.html">&nbsp;HTML5&nbsp;</a>的浏览器访问本系统</span>
+						
+					</span>
+					<span class="right">COPYRIGHT @ 2004-2012 运营平台中心技术部</span>
+					<div class="html5_notice">
+						<a href="#">
+							<?php 
+								$profiler = ZtChart_Model_Db_Table_Abstract::getDefaultAdapter()->getProfiler();
+							?>
+							共执行MySQL查询 <?php echo $profiler->getTotalNumQueries() ?> 次，耗时 <?php echo round($profiler->getTotalElapsedSecs(), 4) ?> 秒
+						</a>
+						<a href="#">
+							<?php
+								$adapters = array_values(ZtChart_Model_Db_Table_Abstract::getDefaultTableAdapters());
+								$profiler = $adapters[0]->getProfiler();
+							?>
+							共执行Infobright查询 <?php echo $profiler->getTotalNumQueries() ?> 次，耗时<?php echo round($profiler->getTotalElapsedSecs(), 4) ?>秒
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <?php echo $this->layout()->dialog ?>
+</body>
+</html>

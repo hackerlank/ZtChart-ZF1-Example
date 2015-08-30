@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html  manifest="cache.manifest">
+<head>
+    <meta charset="utf-8"/>
+    <!--changes the logical size of the viewable area -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <!--Removing the Toolbars and making the Website iOS capable simply removes Safari’s toolbars and makes your site fullscreen-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!--changes the colour of the iOS’s status bar there are three settings you can use:
+    default
+    black
+    black-translucent
+    Note: If you use default or black the web page content will appear below the iOS’s status bar, to give your website more real estate it’s recommended using black-translucent as it makes the website appear behind the Status bar.-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!--what the user will see when they add your app to their home screen. You can specify three different types of icons depending on what device the user is using-->
+
+    <link rel="apple-touch-icon" href="res/touch-icon-iphone.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="res/touch-icon-iphone4.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="res/touch-icon-ipad.png"/>
+
+    <!--add a Splash Screen to your Web App. Below are the sizes you’ll need for both iPad and iPhone/iPod Touch, these include the status bar area as well-->
+    <!--
+    <link rel="apple-touch-startup-image" sizes="1024x748" href="res/splash-screen-1024x748.jpg"/>
+    <link rel="apple-touch-startup-image" sizes="768x1004" href="res/splash-screen-768x1004.jpg"/>
+    <link rel="apple-touch-startup-image" href="res/splash-screen-320x460.jpg"/>
+    <link rel="apple-touch-startup-image" sizes="640x960" href="res/splash-screen-640x960.jpg"/>
+    -->
+    <title>在线人数监控</title>
+    <link rel="stylesheet" href="./js/lib/jqm/jquery.mobile.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <script type="text/javascript">
+        window.log = window.log || function (msg) {
+            console.log(msg);
+        };
+        window.onerror = function () {
+            console.log(JSON.stringify(arguments));
+            return false; //if release ,must return true
+        };
+    </script>
+    <script type="text/javascript" src="./js/lib/RGraph.common.core.js"></script>
+    <script type="text/javascript" src="./js/lib/RGraph.line.js"></script>
+    <script type="text/javascript" src="./js/lib/jqm/jquery.mobile.js"></script>
+    <script type="text/javascript" src="./js/lib/jquery.js"></script>
+    <script type="text/javascript" src="./js/depends.js"></script>
+    <script type="text/javascript" src="./js/main.js"></script>
+</head>
+<body ontouchmove="event.preventDefault()">
+<!--message panel-->
+<div class="ui-msg">
+    <div class="ui-corner-all ui-bar-a">
+        <span class="ui-icon-loading"></span>
+        <h3>正在加载...</h3>
+    </div>
+</div>
+<!--splash page-->
+<section data-role="page" data-add-back-btn="false" id="page-splash">
+    <div class="ui-guid">
+        <p>
+            <img src="res/img_step.png"/>
+        </p>
+        <div class="step_show_div">
+            <div class="closeBtn"><img alt="" src="res/close_btn.jpg"/></div>
+            <span>现在就安装应用吧!</span><br />点击屏幕下方的"添加"按钮<br />参考上图两个步骤
+        </div>
+    </div>
+</section>
+<!--main page-->
+<section data-role="page" data-add-back-btn="false" id="page-main">
+    <header data-role="header" data-position="fixed">
+        <h1></h1>
+    </header>
+    <div data-role="content">
+        <canvas id="cvs"></canvas>
+    </div>
+    <footer data-role="footer" data-position="fixed">
+    </footer>
+</section>
+<!--login page-->
+<section data-role="page" data-add-back-btn="false" id="page-logon">
+    <header data-role="header" data-position="fixed">
+        <h1></h1>
+    </header>
+    <div data-role="content">
+        <div data-role="fieldcontain">
+            <span>首次使用，请输入下列信息</span>
+            <input type="text" id="user" placeholder="域帐号"/>
+            <input type="password" id="pwd" placeholder="密码"/>
+            <input type="text" id="pwd2" style="display:none;"/>
+            <label for="checkbox1">显示密码</label>
+            <input type="checkbox" id="checkbox1"/>
+            <a href="#" data-role="button" data-theme="b" id="logon">登陆</a>
+        </div>
+    </div>
+</section>
+</body>
+</html>

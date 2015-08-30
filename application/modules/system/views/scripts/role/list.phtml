@@ -1,0 +1,47 @@
+<?php $this->headTitle('角色管理') ?>
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+                <span class="right">
+                    <?php echo $this->navigation()->mvcMenu()->renderMVCMenu('new', null, null, null, array('class' => 'btn3')) ?>
+                </span>
+            </div>
+            <div class="defBar_right"></div>
+            <div class="main_div">
+            	<table align="center" cellpadding="0" cellspacing="1" width="740" class="mainTable">
+                	<tr class="t_tr">
+                    	<td width="30">&nbsp;</td>
+                        <td>角色名称</td>
+                        <td>角色描述</td>
+                        <td width="240">管理</td>
+                    </tr>
+                    <?php foreach ($this->paginator->getCurrentItems() as $role) {?>
+                    <tr class="<?php echo $this->cycle(array('d_tr_1', 'd_tr_2'))->next() ?>">
+                    	<td><input type="checkbox" class="multiecheck" name="roleid[]" value="<?php echo $role['role_id'] ?>" /></td>
+                        <td><?php echo $role['role_name'] ?></td>
+                        <td><?php echo $role['role_desc']?></td>
+                        <td>
+                        	<?php echo $this->navigation()->mvcMenu()->renderMVCMenu('edit', null, null, array('role_id' => $role['role_id']), array('class' => 'btn2')) ?>
+                            <?php echo $this->navigation()->mvcMenu()->renderMVCMenu('remove', null, null, array('role_id' => $role['role_id']), array('class' => 'btn2')) ?>
+                            <?php echo $this->navigation()->mvcMenu()->renderMVCMenu('assign', null, null, array('role_id' => $role['role_id']), array('class' => 'btn2')) ?>
+                        </td>
+                    </tr>
+                    <?php 
+					}
+					for ($i = 0; $i < (Zend_Paginator::getDefaultItemCountPerPage() - $this->paginator->getCurrentItemCount()); $i++) {
+                    ?>
+                    <tr class="<?php echo $this->cycle(array('d_tr_1', 'd_tr_2'))->next() ?>">
+                    	<td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <?php
+                    } 
+                    ?>
+                </table>
+                <div class="page_div"><?php echo $this->paginationControl() ?></div>
+            </div>

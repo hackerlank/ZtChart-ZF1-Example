@@ -1,0 +1,64 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl('/scripts/jquery.base64.js'));
+$this->headScript()->captureStart();
+?>
+(function($){
+	$.fn.serializeJSON = function() {
+		var json = {};
+		$.map($(this).serializeArray(), function(n, i){
+			json[n['name']] = n['value'];
+		});
+		
+		return json;
+	};
+	$.fn.serializeJSONString = function() {
+		var json = [];
+		$.map($(this).serializeArray(), function(n, i){
+			json.push('"' + n['name'] + '":"' + n['value'] + '"');
+		});
+		
+		return '{' + json.join(',') + '}';
+	};
+})(jQuery);
+
+$(function() {
+	$('form').submit(function() {
+		parent.window.location.href = '<?php echo $this->url(array('action' => 'search', 'controller' => 'opinion', 'module' => 'system', 'q' => ''), null, true) ?>' + $.base64.encode(encodeURI($(this).serializeJSONString()));
+	});
+});
+<?php
+$this->headScript()->captureEnd(); 
+?>
+		<form>
+			<ul>
+	        	<li>
+	            	<span class="spanTxt">提交人：</span>
+	                <input type="text" class="textInput" name="opinion_submitter" />
+	            </li>
+	            <li>
+	            	<span class="spanTxt">标题：</span>
+	                <input type="text" class="textInput" name="opinion_title" />
+	            </li>
+	            <li>
+	            	<span class="spanTxt">类型：</span>
+	               	<label><input type="radio" name="opinion_category" value="功能建议" /> 功能建议</label>
+	                <label><input type="radio" name="opinion_category" value="BUG报告" /> BUG报告</label>
+	                <label><input type="radio" name="opinion_category" value="其他意见" /> 其他意见</label>
+	            </li>
+	            <li>
+	            	<span class="spanTxt">提交时间：</span>
+	                <?php echo $this->datePicker('opinion_submit_datetime1', null, array(), array('name' => 'opinion_submit_datetime')) ?>
+	                	到
+	                <?php echo $this->datePicker('opinion_submit_datetime2', null, array(), array('name' => 'opinion_submit_datetime')) ?>
+	            </li>
+	 			<li>
+	            	<span class="spanTxt">状态：</span>
+	               	<label><input type="radio" name="opinion_status" value="0" /> 新建</label>
+	                <label><input type="radio" name="opinion_status" value="1" /> 已解决</label>
+	            </li>
+	            <li class="liTxtCenter">
+	            	<button type="submit" class="btn2">确定</button>
+	                <button type="button" class="btn2">取消</button>
+	            </li>
+	       </ul>
+       </form>

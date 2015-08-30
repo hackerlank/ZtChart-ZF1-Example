@@ -1,0 +1,58 @@
+<?php 
+$payment = array_map(null, isset($this->chartBank['data']) ? $this->chartBank['data'] : array(), isset($this->chart['data']) ? $this->chart['data'] : array());
+
+$this->headScript()->appendFile($this->baseUrl('/scripts/RGraph/RGraph.line.js'));
+$this->headScript()->appendFile($this->baseUrl('/scripts/RGraph/RGraph.bar.js'));
+$this->headScript()->captureStart();
+?>
+$(function() {
+	var payment = new RGraph.Bar('chart', $.map(<?php echo Zend_Json::encode(isset($payment) ? $payment : array()) ?>, function(v) { return [[((v[0] + 0) * 0.0089 / 10000), ((v[1] + 0) * 0.0089 / 10000)]] }));
+		payment.Set('chart.background.grid.autofit', true);
+		payment.Set('chart.gutter.left', 50);
+		payment.Set('chart.gutter.right', 40);
+		payment.Set('chart.gutter.bottom', 100);
+		payment.Set('chart.colors', ['#4E81BA', '#FF0000']);
+		payment.Set('chart.key', ['网银充值金额（单位：万元）', '充值金额（单位：万元）']);
+		payment.Set('chart.key.background', 'white');
+		payment.Set('chart.key.position', 'gutter');
+		payment.Set('chart.key.position.x', 140);
+		payment.Set('chart.key.position.y', 230);
+		payment.Set('chart.key.position.gutter.boxed', false);
+		payment.Set('chart.labels', <?php echo $this->labelFormat(isset($this->chart['label']) ? $this->chart['label'] : array()) ?>);
+		payment.Set('chart.text.font', 'tahoma, arial, 宋体');
+	
+	var pecentage = new RGraph.Line('chart', <?php echo Zend_Json::encode(array_map(function($netbank, $payment) { return @round($netbank / $payment * 100, 2); }, isset($this->chartBank['data']) ? $this->chartBank['data'] : array(), isset($this->chart['data']) ? $this->chart['data'] : array())) ?>);
+		pecentage.Set('chart.background.grid', false);
+		pecentage.Set('chart.linewidth', 2);
+		pecentage.Set('chart.tickmarks', 'endcircle');
+		pecentage.Set('chart.colors', ['#A3AE6A']);
+		pecentage.Set('chart.key', ['网银充值比例']);
+		pecentage.Set('chart.key.background', 'white');
+        pecentage.Set('chart.key.position', 'gutter');
+		pecentage.Set('chart.key.position.x', 500);
+		pecentage.Set('chart.key.position.y', 230);
+		pecentage.Set('chart.key.position.gutter.boxed', false);
+		pecentage.Set('chart.gutter.left', 50);
+		pecentage.Set('chart.gutter.right', 40);
+		pecentage.Set('chart.gutter.bottom', 80);
+		pecentage.Set('chart.hmargin', 10);
+		pecentage.Set('chart.text.font', 'tahoma, arial, 宋体');
+
+ 	var combo = new RGraph.CombinedChart(payment, pecentage);
+    combo.Draw();
+    
+    	pecentage.Set('chart.noaxes', false);
+		pecentage.Set('chart.noxaxis', true);
+		pecentage.Set('chart.yaxispos', 'right');
+		pecentage.Set('chart.ymax', 100);
+		pecentage.Set('chart.ylabels', true);
+		pecentage.Set('chart.units.post', '%');
+		
+	RGraph.RedrawCanvas(pecentage.canvas);
+});
+<?php 
+$this->headScript()->captureEnd();
+?>
+		<canvas id="chart" width="740" height="300" style="background-color: white;">
+        	[IE7+ is required to view the charts.]
+        </canvas>

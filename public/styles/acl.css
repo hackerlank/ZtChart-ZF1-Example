@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+
+ul.resource {
+	margin-left: 46px;
+}
+ul.resource li {
+	line-height: 22px;
+}
+ul.resource li.item_1 {
+	font-weight: bold;
+}
+ul.resource li.item_2 {
+
+}
+ul.resource li.item_3 {
+	display: inline;
+	font-size: 12px;
+	font-weight: normal;
+}

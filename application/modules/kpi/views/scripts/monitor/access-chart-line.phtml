@@ -1,0 +1,49 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl('/scripts/RGraph/RGraph.line.js'));
+$this->headScript()->captureStart() 
+?>
+$(function() {
+		$.ajaxSetup({timeout: 1000});
+		setInterval(function() {
+    		$.post('', {'format': 'json'}, function(dataset) {
+    			RGraph.Clear(document.getElementById('chart'));
+    			RGraph.ObjectRegistry.Clear();
+    			var chart = new RGraph.Line('chart', 
+    							$.map(dataset.chart.data, function(v) { return v + 0 }), 
+    							$.map(dataset.chart.ip, function(v) { return v + 0 }));
+		    	chart.Set('chart.background.grid.autofit', true);
+		    	chart.Set('chart.gutter.left', 40);
+		    	chart.Set('chart.gutter.top', 35);
+		    	chart.Set('chart.gutter.right', 15);
+		    	chart.Set('chart.gutter.bottom', 60);
+		    	chart.Set('chart.colors', ['blue', 'green']);
+				chart.Set('chart.units.post', '');
+				chart.Set('chart.linewidth', 2);
+		    	//chart.Set('chart.labels.above', true);
+		    	chart.Set('chart.tickmarks', 'endcircle');
+		    	chart.Set('chart.labels', $.map(dataset.chart.label, function(v) { return v.substr(-1) % 10 == 0 ? v.substr(11) : '' }));
+		    	//chart.Set('chart.text.angle', 45);
+		    	chart.Set('chart.text.color', '#333');
+				chart.Set('chart.text.font', 'tahoma, arial, 宋体');
+				chart.Set('chart.key', ['登陆人次', '登陆IP']);
+				chart.Set('chart.key.colors', ['blue', 'green']);
+				chart.Set('chart.key.background', 'white');
+				chart.Set('chart.key.position', 'gutter');
+				chart.Set('chart.key.position.y', 8);
+				chart.Set('chart.key.position.gutter.boxed', false);
+				chart.Set('chart.shadow', true);
+				chart.Set('chart.shadow.offsetx', 0);
+				chart.Set('chart.shadow.offsety', 0);
+				chart.Set('chart.shadow.blur', 25);
+				chart.Set('chart.background.grid.autofit', true);
+				chart.Set('chart.background.grid.autofit.numvlines', 11);
+		    	chart.Draw();
+	    	}, 'json');
+	    }, 1000);
+});
+<?php 
+$this->headScript()->captureEnd() 
+?>		
+		<canvas id="chart" width="740" height="250" style="background-color: white;">
+        	[IE7+ is required to view the charts.]
+        </canvas>

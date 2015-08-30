@@ -1,0 +1,99 @@
+<?php 
+$this->headTitle('用户管理');
+$this->headScript()->captureStart(); 
+?>
+$(function(){
+	$('.useractive').change(function() {
+		var ua = $(this);
+		$.post(
+			'<?php echo $this->url(array('action' => 'active', 'controller' => 'user'))?>',
+			{'user_id': $(this).val()}, 
+			function(result) {
+				if (true == result) {
+					if (ua.prop('checked')) {
+						$('<div title="警告" id="dialog">用户已启用</div>').dialog();
+					} else {
+						$('<div title="警告" id="dialog">用户已停用</div>').dialog();
+					} 
+				} else {
+					$('<div title="警告" id="dialog">' + result + '</div>').dialog();
+				}
+			}
+		);
+	});
+	$('.dialog').click(function(e) {
+		e.preventDefault();
+		$('<iframe src="' + this.href + '"></iframe>').dialog(
+			{
+				'width': 500, 
+				'resizable': false, 
+				'title': $(this).text(), 
+				'open': function() {
+					this.style.width = '95%';
+				}
+			}
+		);
+	});
+});
+<?php
+$this->headScript()->captureEnd(); 
+?>
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+                <span class="right">
+                    <?php echo $this->navigation()->mvcMenu()->renderMVCMenu('new', null, null, null, array('class' => 'btn3')) ?>
+                    <?php echo $this->navigation()->mvcMenu()->renderMVCMenu('search', null, null, array('format' => 'inbox'), array('class' => 'btn3 dialog')) ?>
+                </span>
+            </div>
+            <div class="defBar_right"></div>
+            <div class="main_div">
+            	<table align="center" cellpadding="0" cellspacing="1" width="740" class="mainTable">
+                	<tr class="t_tr">
+                    	<td width="30">&nbsp;</td>
+                        <td>域账号</td>
+                        <td>姓名</td>
+                        <td>部门</td>
+                        <td>角色</td>
+                        <td>启用</td>
+                        <td>管理</td>
+                    </tr>
+                    <?php foreach ($this->paginator->getCurrentItems() as $user) {?>
+                    <tr class="<?php echo $this->cycle(array('d_tr_1', 'd_tr_2'))->next() ?>">
+                    	<td><input type="checkbox" class="multiecheck" name="user_id[]" value="<?php echo $user['user_id'] ?>" /></td>
+                        <td><?php echo $user['user_name'] ?></td>
+                        <td><?php echo $user['user_chinesename']?></td>
+                        <td><?php echo $user['user_dept']?></td>
+                        <td><?php echo $this->roleName($user['user_roleid']) ?></td>
+                        <td>
+                        	<?php 
+                        		if ($this->navigation()->mvcMenu()->acceptMVC('active', null, null, array('user_id' => $user['user_id']))) {
+                        			echo $this->formCheckbox("user_active[]", $user['user_active'] ? $user['user_id'] : $user['user_active'], array('class' => 'useractive'), array($user['user_id'], 0));
+                        		} else {
+                        			echo $this->formCheckbox("user_active[]", $user['user_active'] ? $user['user_id'] : $user['user_active'], array('class' => 'useractive', 'disabled' => 'disabled'), array($user['user_id'], 0));
+                        		} 
+                        	?>
+                        </td>
+                        <td>
+                        	<?php echo $this->navigation()->mvcMenu()->renderMVCMenu('assign', null, null, array('user_id' => $user['user_id']), array('class' => 'btn2')) ?>
+                        </td>
+                    </tr>
+                    <?php 
+					}
+					for ($i = 0; $i < (Zend_Paginator::getDefaultItemCountPerPage() - $this->paginator->getCurrentItemCount()); $i++) {
+                    ?>
+                    <tr class="<?php echo $this->cycle(array('d_tr_1', 'd_tr_2'))->next() ?>">
+                    	<td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <?php
+                    } 
+                    ?>
+                </table>
+                <div class="page_div"><?php echo $this->paginationControl() ?></div>
+            </div>

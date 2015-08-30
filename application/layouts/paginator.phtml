@@ -1,0 +1,8 @@
+<?php if (isset($this->pageCount) && $this->pageCount > 0) { ?>
+					<a href="?page=<?php echo $this->first ?>">首页</a>
+                    <a href="?page=<?php echo $this->previous ?>">上一页</a>
+                    <a href="?page=<?php echo $this->next ?>">下一页</a>
+                    <a href="?page=<?php echo $this->last ?>">尾页</a>
+                    <span>共<?php echo $this->totalItemCount ?>条</span>
+                    <span>第<?php echo $this->formSelect('page', $this->current, null, array_slice(range(0, $this->pageCount), 1, null, true)) ?>页</span>
+<?php } ?>

@@ -1,0 +1,71 @@
+一，取得令牌
+    接口格式：http://localhost/ztchart/public/ws/proxy/login?uname=&pwd=
+    输入参数：uname(账号）pwd(密码)
+          
+    
+    输出：json格式如下
+       {res:ture|false,token:string,error:string} 
+
+
+二，获取所有游戏类型
+
+    接口格式：http://localhost/ztchart/public/ws/proxy/game?token=
+    输入参数：uname(账号）token(令牌)
+    
+    输出：json格式如下
+        [{"game_code":"1","game_name":"游戏1"},{"game_code":"2","game_name":"游戏2"}]
+        
+        
+        
+
+三，获取游戏的区信息
+
+    接口格式：http://localhost/ztchart/public/ws/proxy/gamezone?uname=&token=&gametype=
+    输入参数：uname(账号）token(令牌) gametype（游戏类型编码)
+          
+    
+    输出：json格式如下
+        [{"zone_id":"21","zone_name":"测试1区"},{"zone_id":"22","zone_name":"测试2区"}]
+
+
+四，取得游戏的数据信息
+
+地址：http://localhost/ztchart/public/ws
+
+公共参数：{'uname': '用户名', 'token': '令牌', 'gametype': '游戏类型数组'}
+
+1. 当前在线人数
+    请求：/online/now
+    参数： {'pdate': '环比日期，101为昨日，103为一周'}
+    返回：{游戏类型: {'gamename': '游戏名称', 'datetime': '时间', 'number': '人数', 'delta': '变化数值', 'percentage': '变化百分比'}}
+
+2. 在线概况
+    请求：/online/profile
+    参数：{'pdate': '环比日期，101为昨日，103为一周'}
+    返回：{
+        'today': {'pcu': '今日PCU', 'acu': '今日ACU', 'bcu': '今日最低'}, 
+        'yestoday': {'pcu': '昨日PCU', 'acu': '昨日ACU', 'bcu': '昨日最低'}
+          }
+          
+3. 人数曲线
+    请求：/online/chart
+    参数：{'pdate': '环比日期, 101为昨日，103为一周', 'range': '数据点个数', 'offset': '偏移量'}
+    返回：{'datetime':[时间1, 时间2, ...], 'data': {'0': [数据1, 数据2, ...], '101': [数据1, 数据2, ...], '103': [数据1, 数据2, ...]}}
+    
+五，获取在线人数信息
+
+     接口格式：http://localhost/ztchart/public/ws/proxy/gamedata?uname=&token=&gametype=&first=&zoneid=
+     输入参数：uname(账号）token(令牌) gametype（游戏类型编码)
+            first(是否第一次请求。等于1时表示是，返回最新20条数据；等于0或空时表示否，返回最新1条数据）
+            zoneid（游戏区编码；等于0或空时返回游戏所有人数）
+          
+    
+     输出：json格式如下
+        {"max":"630","min":"1","data":["1345536122","391"]}
+     说明：
+        max:今天最高人数
+        min:今天最低人数
+        data:当前最新人数。格式：[时间戳，人数]
+      注意：first=1 时，返回
+
+{"max":"593","min":"199","data":[["1345793581","333"],[],[] ]}

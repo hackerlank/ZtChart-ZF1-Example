@@ -1,0 +1,49 @@
+<?php
+$this->headScript()->appendFile($this->baseUrl('/scripts/jquery.url.js'));
+$this->headScript()->captureStart(); 
+?>
+$(function(){
+	$('.ssjk_label :checkbox').click(function() {
+		var self = $(this);
+		setTimeout(function() {
+			var box = $('.iframe_div.ssjk').eq($('.ssjk_label :checkbox').index(self));
+			box.toggle(self.prop('checked'));
+			box.find('iframe').attr('src', box.find('iframe').attr('src') ? '' : box.find('iframe').attr('title'));
+		}, 0);
+	});
+	$('.ssjk_label :checkbox').each(function() {
+		if (-1 != $.inArray($(this).val(), ('' + $.url().param('select')).split('|'))) {
+			$(this).click();
+		}
+	});
+});
+<?php
+$this->headScript()->captureEnd();
+?>
+        	<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+            </div>
+            <div class="defBar_right"></div>
+            
+            <div class="main_div">
+                <div class="kpi_chos_time_div">
+                    <div class="txt_main_div" style="border-top:1px solid #dcdcdc;">
+                    	<div class="d1">请选择你要查看的实时数据：</div>
+                        <div class="ssjk_label">
+                        	<?php echo $this->action('access', 'monitor', 'kpi', array('control' => true), true) ?>
+                            <?php echo $this->action('online', 'monitor', 'kpi', array('control' => true), true) ?>
+                            <?php echo $this->action('payment', 'monitor', 'kpi', array('control' => true), true) ?>
+                            <?php echo $this->action('consume', 'monitor', 'kpi', array('control' => true), true) ?>
+                        </div>
+                    </div>
+                </div>
+                <?php echo $this->action('access', 'monitor', 'kpi', array(null), true) ?>
+                
+                <?php echo $this->action('online', 'monitor', 'kpi', array(null), true) ?>
+                
+                <?php echo $this->action('payment', 'monitor', 'kpi', array(null), true) ?>
+                
+                <?php echo $this->action('consume', 'monitor', 'kpi', array(null), true) ?>
+                
+            </div>

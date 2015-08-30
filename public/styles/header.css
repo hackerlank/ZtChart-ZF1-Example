@@ -1,0 +1,140 @@
+@charset "utf-8";
+/*
+2011.6.22
+hujunjie
+
+我的通行证
+*/
+
+
+body{
+	margin:0; 
+	padding:0;
+	width:100%;
+	font-family: tahoma, arial, "宋体";
+    font-size: 12px;
+	background:url(../images/header_bg_1.jpg) repeat-x scroll center top #ffffff;
+	}
+a{
+	text-decoration:none;
+	cursor:pointer;
+	}
+a:hover{
+	text-decoration:underline;
+	color:#ff6600;
+	}
+.left{
+	float:left;
+	}
+.head_main_div{
+	width:960px; 
+	height:150px;
+	margin:0 auto; 
+	position:relative; 
+	top:0px; 
+	left:0px;
+	}
+
+
+.head_link_bg{
+	width:301px; 
+	height:28px;
+	background:url(../images/head_link_bg.jpg) no-repeat; 
+	float:right; 
+	padding:8px 0 0 40px;
+	}
+
+.head_link_bg a{
+	margin-right:20px;
+	color:#bababa;
+	}
+.head_menu_bg{
+	position:absolute; 
+	top:84px; 
+	right:0;
+	}
+.head_menu_bg a{
+	width:79px; 
+	height:43px; 
+	display:inline-block; 
+	margin:0 30px 0 0;
+	cursor:pointer;
+	vertical-align:top;
+	}
+
+.head_menu_bg ul.navigation{
+	list-style:none;	
+	}
+.head_menu_bg ul.navigation li{
+	float:left;
+	}
+	
+.head_menu_bg ul.navigation li a{
+	line-height: 0px;
+	font-size: 0px;
+	}
+
+.head_menu_bg ul.navigation li a.a1{
+	background:url(../images/head_btn.png) no-repeat 0 -270px;
+	}
+
+.head_menu_bg ul.navigation li a.a2{
+	background:url(../images/head_btn.png) no-repeat 0 -313px;
+	}
+
+.head_menu_bg ul.navigation li a.a3{
+	background:url(../images/head_btn.png) no-repeat 0 -356px;
+	}
+
+.head_menu_bg ul.navigation li a.a4{
+	background:url(../images/head_btn.png) no-repeat 0 -399px; 
+	}
+.head_menu_bg ul.navigation li a.a5{
+	background:url(../images/head_btn.png) no-repeat 0 -442px; 
+	}
+
+.head_menu_bg ul.navigation li.active a{
+	height:59px; 
+	cursor:default;
+	}
+	
+.head_menu_bg ul.navigation li.active a.a1{
+	background-position:0 0; 
+	}
+.head_menu_bg ul.navigation li.active a.a2{
+	background-position:0 -67px; 
+	}
+.head_menu_bg ul.navigation li.active a.a3{
+	background-position:0 -134px; 
+	}
+.head_menu_bg ul.navigation li.active a.a4{
+	background-position:0 -199px; 
+	}
+.head_menu_bg ul.navigation li.active a.a5{
+	background-position:0 -499px; 
+	}
+.logo{
+	width:600px; 
+	height:84px; 
+	background:url(../images/logo.jpg) no-repeat; 
+	position:absolute; 
+	top:0px; 
+	left:-150px;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

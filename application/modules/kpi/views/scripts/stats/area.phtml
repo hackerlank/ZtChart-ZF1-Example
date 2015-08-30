@@ -1,0 +1,30 @@
+			<div class="clear">
+            	<div class="left">
+                    <div class="defBar_left"></div>
+                    <div class="defBar_middle" style="width:345px;">
+                        <span class="title">今日地区分布（按登录IP）</span>
+                        <span class="right">
+                            <?php echo $this->navigation()->mvcMenu()->renderMVCMenuAlwaysVisible('area', 'access', null, null, array('class' => 'btn3', 'label' => '查看全部')) ?>
+                        </span>
+                    </div>
+                    <div class="defBar_right"></div>
+                    
+                    <div class="iframe_div_2">
+                    	<iframe allowtransparency="ture" scrolling="no" frameborder="0" src="<?php echo $this->url(array('action' => 'area', 'controller' => 'stats', 'chart' => 'pieAccess')) ?>" style="width:100%; height:100%;"></iframe>
+                    </div>
+                    
+                </div>
+                <div class="right">
+                    <div class="defBar_left"></div>
+                    <div class="defBar_middle" style="width:345px;">
+                        <span class="title">今日地区分布（按消耗IP）</span>
+                        <span class="right">
+                            <?php echo $this->navigation()->mvcMenu()->renderMVCMenuAlwaysVisible(null, 'consume', null, null, array('class' => 'btn3', 'label' => '查看全部')) ?>
+                        </span>
+                    </div>
+                    <div class="defBar_right"></div>
+                    <div class="iframe_div_2">
+                    	<iframe allowtransparency="ture" scrolling="no" frameborder="0" src="<?php echo $this->url(array('action' => 'area', 'controller' => 'stats', 'chart' => 'pieConsume')) ?>" style="width:100%; height:100%;"></iframe>
+                    </div>
+                </div>
+			</div>

@@ -1,0 +1,28 @@
+<?php 
+$this->headTitle('角色管理');
+$this->headLink()->appendStylesheet($this->baseUrl('/styles/acl.css'));
+$this->headScript()->captureStart();
+?>
+$(function(){
+	$('.resource_id').click(function(){
+		var self = $(this);
+		setTimeout(function(){
+			self.next('ul').find(':checkbox').prop({'checked': self.prop('checked'), 'disabled': self.prop('checked')});
+		}, 0);
+	});
+	
+});
+<?php
+$this->headScript()->captureEnd(); 
+?>
+			<div class="defBar_left"></div>
+            <div class="defBar_middle">
+            	<span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu() ?></span>
+            </div>
+            <div class="defBar_right"></div>
+            <div class="main_div">
+            	<form method="post">
+            		<?php echo $this->resourceList()->renderList($this->resourceId, $this->allowedResourceId, array('ulClass' => 'resource', 'liClass' => 'item')) ?>
+            		<div align="center"><button type="submit" class="btn2">确定</button></div>
+            	</form>
+            </div>

@@ -1,0 +1,17 @@
+		<form method="post">
+			<ul>
+	        	<li>
+	            	<span class="spanTxt">标题：</span>
+	                <input name="notice_title" type="text" class="textInput" value="<?php echo $this->notice['notice_title'] ?>" />
+	            </li>
+	            <li class="heiAuto">
+	            	<span class="spanTxt">正文：</span>
+	                <textarea name="notice_content"><?php echo $this->notice['notice_content'] ?></textarea>
+	            </li>
+	     
+	            <li class="liTxtCenter">
+	            	<button class="btn2" type="submit">确定</button>
+	                <button class="btn2" type="button">取消</button>
+	            </li>
+			</ul>
+		</form>

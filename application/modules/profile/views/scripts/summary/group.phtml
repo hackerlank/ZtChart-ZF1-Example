@@ -1,0 +1,85 @@
+<?php
+$this->headLink()->appendStylesheet($this->baseUrl('/styles/games.css'));
+$this->headScript()->appendFile($this->baseUrl('/scripts/tablesorter/jquery.tablesorter.js'));
+$this->headScript()->captureStart();
+?>
+$(function(){
+	var sort = {'game': 0, 'point': 2, 'netbank': 3};
+	$('.sort').click(function() {
+		$('.sort').not($(this)).toggleClass().addClass('sort default');
+		if(!$(this).hasClass("down"))	$(this).removeClass("default up down").addClass('down');
+		else	$(this).removeClass("default up down").addClass('up');
+		$(".tablesorter").tablesorter({
+			'textSorter': function(a, b) { return a.localeCompare(b) }, 
+			'sortList': [ [sort[this.id], Number($(this).hasClass('down'))] ]
+		});
+	});
+	$('#point').click();
+});
+<?php
+$this->headScript()->captureEnd();
+?>
+		<div class="defBar_left"></div>
+        <div class="defBar_middle" style="width:926px;">
+            <span class="title"><?php echo $this->navigation()->mvcMenu()->renderCurrentMenu($this->request) ?></span>
+        </div>
+        <div class="defBar_right"></div>
+        <div class="paixu_div">
+            <span>排序：</span>
+            <span class="sort default" id="game"></span>
+            <span class="sort default" id="point" title="今日"></span>
+            <span class="sort default" id="netbank" title="今日"></span>
+            <span style="float: right">数据截止时间: <?php echo ZtChart_Model_Monitor_Daemon_Archive::getDeadlineTime() ?></span>
+        </div>
+        <table cellpadding="0" cellspacing="1" width="966" class="mainTable tablesorter">
+			<thead>
+				<tr class="t_tr" style="font-size:14px;">
+					<th>游戏名称</th>
+					<th class="sorter-false">时间</th>
+					<th>消耗点数</th>
+					<th>网银消耗比例</th>
+					<th class="sorter-false"><a href="<?php echo $this->baseUrl('/help#d7') ?>" target="_blank" title="活跃付费账户">APA</a></th>
+					<th class="sorter-false"><a href="<?php echo $this->baseUrl('/help#d8') ?>" target="_blank" title="每用户平均收入">ARPU</a></th>
+					<!--  
+					<th class="sorter-false"><a href="<?php echo $this->baseUrl('/help#b5') ?>" target="_blank" title="最高同时在线人数">PCU</a></th>
+					<th class="sorter-false"><a href="<?php echo $this->baseUrl('/help#b4') ?>" target="_blank" title="平均同时在线人数">ACU</a></th>
+					-->
+					<th class="sorter-false">活跃账号</th>
+					<th class="sorter-false"></th>
+				</tr>
+			</thead>
+			<tbody>
+            <?php 
+            foreach (Zend_Registry::get('user')->getRole()->getGameTypes() as $gameType => $gameName) {
+				if ($this->navigation()->mvcMenu()->acceptMVC(null, 'stats', 'kpi', null, array('gametype' => $gameType))) {
+					$url = $this->url(array('action' => null, 'controller' => 'stats', 'module' => 'kpi', 'gametype' => $gameType));
+				} 
+            ?>
+            <tr class="d_tr_3 weight">
+                <td rowspan="2" class="first">
+                    <a class="game_icon" id="<?php echo ZtChart_Model_GameType::getShortName($gameType) ?>" href="<?php echo isset($url) ? $url : '#' ?>"><?php echo $gameName ?></a>
+                </td>
+                <td>今日</td>
+                <td><?php echo @$data = array_sum($this->todayConsume['chart'][$gameType]['data']) ?></td>
+                <td><?php echo @round(array_sum($this->todayConsumeBank['chart'][$gameType]['data']) / $data * 100, 2) ?>%</td>
+                <td><?php echo @$apa = array_sum($this->todayConsume['chart'][$gameType]['apa']) ?></td>
+                <td><?php echo @$this->money($data / $apa) ?></td>
+                <td><?php echo @$apa = array_sum($this->todayAccount['chart'][$gameType]['account']) ?></td>
+                <td rowspan="2" class="last">
+                <?php if (isset($url)) { ?>
+                	<a class="btn5" href="<?php echo $url ?>">查看报表</a>
+                <?php } ?>
+                </td>
+            </tr>
+            <tr class="d_tr_4 expand-child">
+                <td>昨日</td>
+                <td><?php echo @$data = array_sum($this->yestodayConsume['chart'][$gameType]['data']) ?></td>
+                <td><?php echo @round(array_sum($this->yestodayConsumeBank['chart'][$gameType]['data']) / $data * 100, 2) ?>%</td>
+                <td><?php echo @$apa = array_sum($this->yestodayConsume['chart'][$gameType]['apa']) ?></td>
+                <td><?php echo @$this->money($data / $apa) ?></td>
+                <td><?php echo @$apa = array_sum($this->yestodayAccount['chart'][$gameType]['account']) ?></td>
+                <td></td>
+            </tr>
+            <?php } ?>
+            </tbody>
+        </table>
